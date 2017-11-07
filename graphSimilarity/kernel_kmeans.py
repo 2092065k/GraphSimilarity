@@ -1,8 +1,6 @@
 import numpy as np
 from copy import deepcopy
 from graph import Graph
-from kernel_methods import rbf_kernel
-from graph_edit_distance import graph_edit_distance
 
 
 def __get_kernel_matrix(graphs, dist_func, kernel):
@@ -64,18 +62,55 @@ def __distance_to_centroid(graph_index, centroid_index, graph_indices_per_cluste
     return distance
 
 
-def kernel_kmeans(k, max_iters, seed, graphs, dist_func, kernel):
+def __random_cluster_assignment(k, seed, graphs):
 
     np.random.seed(seed)
+    labels = [np.random.randint(0, k) for x in range(len(graphs))]
+    return labels
+
+
+def __proximity_cluster_assignment(k, seed, graphs, dist_func):
+
+    np.random.seed(seed)
+    unique_random_indices = set()
+    while len(unique_random_indices) < k:
+        unique_random_indices.add(np.random.randint(0, len(graphs)))
+
+    centroid_indices = list(unique_random_indices)
+
+    labels = []
+
+    for graph in graphs:
+
+        min_distance = float("inf")
+        closest_centroid = -1
+
+        for label in range(len(centroid_indices)):
+
+            dist = dist_func(graph, graphs[centroid_indices[label]])
+
+            if dist < min_distance:
+                min_distance = dist
+                closest_centroid = label
+
+        labels.append(closest_centroid)
+
+    return labels
+
+
+def kernel_kmeans(k, max_iters, seed, graphs, dist_func, kernel, init = "random"):
+
     num_iters = 0
+    converged = False
 
     # compute kernel matrix
     kernel_matrix = __get_kernel_matrix(graphs, dist_func, kernel)
 
-    # initial random assignment of cluster membership
-    labels = [np.random.randint(0, k) for x in range(len(graphs))]
-
-    converged = False
+    # initial assignment of cluster membership
+    if init == "random":
+        labels = __random_cluster_assignment(k, seed, graphs)
+    else:
+        labels = __proximity_cluster_assignment(k, seed, graphs, dist_func)
 
     while not converged:
 

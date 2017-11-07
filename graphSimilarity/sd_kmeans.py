@@ -1,6 +1,5 @@
 import numpy as np
 from graph import Graph
-from graph_edit_distance import graph_edit_distance
 
 
 def __compute_cluster_assignment(centroid_indices, graphs, dist_func):
@@ -55,19 +54,23 @@ def __compute_new_cluster_centroids(labels, graphs, dist_func):
     return new_centroid_indices
 
 
-def sd_kmeans(k, max_iters, seed, graphs, dist_func):
+def __get_random_centroids(k, seed, graphs):
 
     np.random.seed(seed)
-    num_iters = 0
-
-    # select k distinct graphs as the cluster centers
     unique_random_indices = set()
     while len(unique_random_indices) < k:
         unique_random_indices.add(np.random.randint(0, len(graphs)))
 
-    centroid_indices = list(unique_random_indices)
+    return list(unique_random_indices)
 
+
+def sd_kmeans(k, max_iters, seed, graphs, dist_func):
+
+    num_iters = 0
     converged = False
+
+    # select k distinct graphs as the cluster centers
+    centroid_indices = __get_random_centroids(k, seed, graphs)
 
     while not converged:
 
