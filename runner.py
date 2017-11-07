@@ -5,6 +5,7 @@ from graphSimilarity.graph import Graph
 from graphSimilarity.data_loader import load_data
 from graphSimilarity.kernel_methods import rbf_kernel
 from graphSimilarity.graph_edit_distance import graph_edit_distance
+from graphSimilarity.delta_con import delta_con
 from graphSimilarity.kernel_kmeans import kernel_kmeans, get_kernel_wcss
 from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss
 
@@ -47,10 +48,10 @@ for graph in graphs:
 
 # for items in res:
 #     if all(x == items[0] for x in items[:10]) and all(x == items[10] for x in items[10:]) and  not all(x == items[0] for x in items):
-#         print "Correct: " + str(items)
+#         #print "Correct: " + str(items)
 #         correct +=1
 #     else:
-#         print "Wrong: " + str(items)
+#         #print "Wrong: " + str(items)
 #         wrong +=1
 
 # print "Correct: " + str(correct)
@@ -63,18 +64,18 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# labels = kernel_kmeans(2, 50, 0, graphs, graph_edit_distance, rbf_kernel)
-# print labels
+labels = kernel_kmeans(2, 50, 0, graphs, graph_edit_distance, rbf_kernel)
+print labels
 
-# kernel_wcss = get_kernel_wcss(2, graphs, labels, graph_edit_distance, rbf_kernel)
-# print kernel_wcss
+kernel_wcss = get_kernel_wcss(2, graphs, labels, graph_edit_distance, rbf_kernel)
+print kernel_wcss
 
 
-# centroids = sd_kmeans(2, 50, 0, graphs, graph_edit_distance)
-# print centroids
+centroids = sd_kmeans(2, 50, 0, graphs, graph_edit_distance)
+print centroids
 
-# sd_wcss = get_sd_wcss(centroids, graphs, graph_edit_distance)
-# print sd_wcss
+sd_wcss = get_sd_wcss(centroids, graphs, graph_edit_distance)
+print sd_wcss
 
 #---------------------------------------------------------------------------------------------
 
@@ -103,4 +104,5 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-
+# dist = delta_con(graphs[16], graphs[18])
+# print dist
