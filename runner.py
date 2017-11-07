@@ -26,6 +26,7 @@ graphs = load_data(sys.argv[1])
 
 for graph in graphs:
     graph.compute_adjacency_matrix()
+    graph.compute_diagonal_matrix()
 
 
 #---------------------------------------------------------------------------------------------
@@ -62,18 +63,18 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-labels = kernel_kmeans(2, 50, 0, graphs, graph_edit_distance, rbf_kernel)
-print labels
+# labels = kernel_kmeans(2, 50, 0, graphs, graph_edit_distance, rbf_kernel)
+# print labels
 
-kernel_wcss = get_kernel_wcss(2, graphs, labels, graph_edit_distance, rbf_kernel)
-print kernel_wcss
+# kernel_wcss = get_kernel_wcss(2, graphs, labels, graph_edit_distance, rbf_kernel)
+# print kernel_wcss
 
 
-centroids = sd_kmeans(2, 50, 0, graphs, graph_edit_distance)
-print centroids
+# centroids = sd_kmeans(2, 50, 0, graphs, graph_edit_distance)
+# print centroids
 
-sd_wcss = get_sd_wcss(centroids, graphs, graph_edit_distance)
-print sd_wcss
+# sd_wcss = get_sd_wcss(centroids, graphs, graph_edit_distance)
+# print sd_wcss
 
 #---------------------------------------------------------------------------------------------
 
@@ -98,3 +99,8 @@ print sd_wcss
 
 # print "Correct: " + str(correct)
 # print "Wrong: " + str(wrong)
+
+
+#---------------------------------------------------------------------------------------------
+
+

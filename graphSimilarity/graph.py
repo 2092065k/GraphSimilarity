@@ -25,3 +25,11 @@ class Graph:
 
     def get_adjacency_matrix(self):
         return self.adjacency_matrix
+
+    def compute_diagonal_matrix(self):
+        diagonal_matrix = np.zeros(self.adjacency_matrix.shape)
+        np.fill_diagonal(diagonal_matrix, sum(self.adjacency_matrix))
+        self.diagonal_matrix = diagonal_matrix
+
+    def get_diagonal_matrix(self):
+        return self.diagonal_matrix
