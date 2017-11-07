@@ -109,7 +109,7 @@ def kernel_kmeans(k, max_iters, seed, graphs, dist_func, kernel):
     return labels
 
 
-def get_wcss(k, graphs, labels, dist_func, kernel):
+def get_kernel_wcss(k, graphs, labels, dist_func, kernel):
 
     wcss = 0
     kernel_matrix = __get_kernel_matrix(graphs, dist_func, kernel)

@@ -5,8 +5,8 @@ from graphSimilarity.graph import Graph
 from graphSimilarity.data_loader import load_data
 from graphSimilarity.kernel_methods import rbf_kernel
 from graphSimilarity.graph_edit_distance import graph_edit_distance
-from graphSimilarity.kernel_kmeans import kernel_kmeans, get_wcss
-from graphSimilarity.sd_kmeans import sd_kmeans
+from graphSimilarity.kernel_kmeans import kernel_kmeans, get_kernel_wcss
+from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss
 
 
 #graph = Graph(2, [(0, 1)])
@@ -58,9 +58,12 @@ for graph in graphs:
 labels = kernel_kmeans(2, 50, 0, graphs, graph_edit_distance, rbf_kernel)
 print labels
 
-wcss = get_wcss(2, graphs, labels, graph_edit_distance, rbf_kernel)
-print wcss
+kernel_wcss = get_kernel_wcss(2, graphs, labels, graph_edit_distance, rbf_kernel)
+print kernel_wcss
 
 
-#print sd_kmeans(2, 50, 0, graphs, graph_edit_distance)
+centroids = sd_kmeans(2, 50, 0, graphs, graph_edit_distance)
+print centroids
 
+sd_wcss = get_sd_wcss(centroids, graphs, graph_edit_distance)
+print sd_wcss

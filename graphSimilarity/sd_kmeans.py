@@ -2,6 +2,7 @@ import numpy as np
 from graph import Graph
 from graph_edit_distance import graph_edit_distance
 
+
 def __compute_cluster_assignment(centroid_indices, graphs, dist_func):
 
     labels = {}
@@ -25,6 +26,7 @@ def __compute_cluster_assignment(centroid_indices, graphs, dist_func):
         labels[closest_centroid].append(graph_index)
 
     return labels
+
 
 def __compute_new_cluster_centroids(labels, graphs, dist_func):
 
@@ -51,8 +53,6 @@ def __compute_new_cluster_centroids(labels, graphs, dist_func):
         new_centroid_indices.append(new_centroid)
 
     return new_centroid_indices
-
-
 
 
 def sd_kmeans(k, max_iters, seed, graphs, dist_func):
@@ -83,3 +83,17 @@ def sd_kmeans(k, max_iters, seed, graphs, dist_func):
             centroid_indices = new_centroid_indices
 
     return centroid_indices
+
+
+def get_sd_wcss(centroid_indices, graphs, dist_func):
+
+    wcss = 0
+    labels = __compute_cluster_assignment(centroid_indices, graphs, dist_func)
+
+    for centoid_index in labels:
+        for graph_index in labels[centoid_index]:
+            
+            squared_dist = dist_func(graphs[graph_index], graphs[centoid_index]) ** 2
+            wcss += squared_dist
+
+    return wcss
