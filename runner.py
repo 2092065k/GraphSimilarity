@@ -31,36 +31,36 @@ for graph in graphs:
 
 #print rbf_kernel(graphs[0], graphs[1], graph_edit_distance, 0.1)
 
-#res = []
-#for seed in range(200):
-#    res.append(kernel_kmeans(2, 50, seed, graphs, graph_edit_distance, rbf_kernel))
-#
-#correct = 0
-#wrong = 0
-#
-#for items in res:
-#    if all(x == items[0] for x in items[:10]) and all(x == items[10] for x in items[10:]) and  not all(x == items[0] for x in items):
-#        print "Correct: " + str(items)
-#        correct +=1
-#    else:
-#        print "Wrong: " + str(items)
-#        wrong +=1
-#
-#print "Correct: " + str(correct)
-#print "Wrong: " + str(wrong)
+
+# res = []
+# for seed in range(1000):
+#     res.append(kernel_kmeans(2, 50, seed, graphs, graph_edit_distance, rbf_kernel))
+
+# correct = 0
+# wrong = 0
+
+# for items in res:
+#     if all(x == items[0] for x in items[:10]) and all(x == items[10] for x in items[10:]) and  not all(x == items[0] for x in items):
+#         print "Correct: " + str(items)
+#         correct +=1
+#     else:
+#         print "Wrong: " + str(items)
+#         wrong +=1
+
+# print "Correct: " + str(correct)
+# print "Wrong: " + str(wrong)
+
 
 #for seed in range(200):
 #    print kernel_kmeans(2, 50, seed, graphs, graph_edit_distance, rbf_kernel)
 
 
-#seed 5 fails
-#seed 6 works
-labels = kernel_kmeans(2, 50, 6, graphs, graph_edit_distance, rbf_kernel)
+labels = kernel_kmeans(2, 50, 0, graphs, graph_edit_distance, rbf_kernel)
 print labels
 
 wcss = get_wcss(2, graphs, labels, graph_edit_distance, rbf_kernel)
 print wcss
 
 
-#print sd_kmeans(2, 50, 5, graphs, graph_edit_distance)
+#print sd_kmeans(2, 50, 0, graphs, graph_edit_distance)
 

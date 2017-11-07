@@ -36,12 +36,12 @@ def __get_graph_indices_per_cluster(k, labels):
 
 def __distance_to_centroid(graph_index, centroid_index, graph_indices_per_cluster, kernel_matrix):
 
-    # removing the graph_index if we are measuring the distance to its curren centroid
-    graph_indices_in_cluster = [x for x in graph_indices_per_cluster[centroid_index] if x != graph_index]
+    graph_indices_in_cluster = graph_indices_per_cluster[centroid_index]
     num_graphs_in_cluster = len(graph_indices_in_cluster)
 
     param1 = kernel_matrix[graph_index, graph_index]
-    #print "p1 " + str(param1)#
+    param2 = 0
+    param3 = 0
 
     # check in case there are no graphs assigned to the cluster
     if num_graphs_in_cluster != 0:
@@ -50,9 +50,7 @@ def __distance_to_centroid(graph_index, centroid_index, graph_indices_per_cluste
         for i in graph_indices_in_cluster:
             kernel_sum += kernel_matrix[graph_index, i]
 
-
-        param2 = kernel_sum / (-2 * num_graphs_in_cluster)
-        #print "p2 " + str(param2)#
+        param2 = (-2 * kernel_sum) / num_graphs_in_cluster
 
         kernel_sum = 0
         for i in graph_indices_in_cluster:
@@ -60,13 +58,6 @@ def __distance_to_centroid(graph_index, centroid_index, graph_indices_per_cluste
                 kernel_sum += kernel_matrix[i, j]
 
         param3 = kernel_sum / (num_graphs_in_cluster ** 2)
-        #print "p3 " + str(param3)#
-
-    else:
-        param2 = 0
-        param3 = 0
-        #print "p2 " + str(param2)#
-        #print "p3 " + str(param3)#
 
     distance = param1 + param2 + param3
 
@@ -107,6 +98,9 @@ def kernel_kmeans(k, max_iters, seed, graphs, dist_func, kernel):
             # update the label of the graph
             labels[graph_index] = closest_centroid
 
+            # TODO: compute update more efficiently
+            graph_indices_per_cluster = __get_graph_indices_per_cluster(k, labels)
+
         num_iters += 1
 
         if labels == old_labels or num_iters >= max_iters:
@@ -123,7 +117,6 @@ def get_wcss(k, graphs, labels, dist_func, kernel):
 
     for i in range(len(graphs)):
         squared_dist = __distance_to_centroid(i, labels[i], graph_indices_per_cluster, kernel_matrix)
-        #print squared_dist
         wcss += squared_dist
 
     return wcss
