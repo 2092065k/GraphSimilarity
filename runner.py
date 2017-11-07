@@ -5,7 +5,7 @@ from graphSimilarity.graph import Graph
 from graphSimilarity.data_loader import load_data
 from graphSimilarity.kernel_methods import rbf_kernel
 from graphSimilarity.graph_edit_distance import graph_edit_distance
-from graphSimilarity.kernel_kmeans import kernel_kmeans
+from graphSimilarity.kernel_kmeans import kernel_kmeans, get_wcss
 from graphSimilarity.sd_kmeans import sd_kmeans
 
 
@@ -39,10 +39,12 @@ for graph in graphs:
 #wrong = 0
 #
 #for items in res:
-#    if all(x == items[0] for x in items):
-#        wrong +=1
-#    else:
+#    if all(x == items[0] for x in items[:10]) and all(x == items[10] for x in items[10:]) and  not all(x == items[0] for x in items):
+#        print "Correct: " + str(items)
 #        correct +=1
+#    else:
+#        print "Wrong: " + str(items)
+#        wrong +=1
 #
 #print "Correct: " + str(correct)
 #print "Wrong: " + str(wrong)
@@ -51,9 +53,14 @@ for graph in graphs:
 #    print kernel_kmeans(2, 50, seed, graphs, graph_edit_distance, rbf_kernel)
 
 
-#seed 2 fails
-#seed 5 works
-print kernel_kmeans(2, 50, 5, graphs, graph_edit_distance, rbf_kernel)
+#seed 5 fails
+#seed 6 works
+labels = kernel_kmeans(2, 50, 6, graphs, graph_edit_distance, rbf_kernel)
+print labels
+
+wcss = get_wcss(2, graphs, labels, graph_edit_distance, rbf_kernel)
+print wcss
 
 
-print sd_kmeans(2, 50, 5, graphs, graph_edit_distance)
+#print sd_kmeans(2, 50, 5, graphs, graph_edit_distance)
+
