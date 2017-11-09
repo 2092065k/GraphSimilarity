@@ -2,7 +2,27 @@ import numpy as np
 from graph import Graph
 
 
-def __compute_cluster_assignment(centroid_indices, graphs, dist_func):
+def __get_distance_matrix(graphs, dist_func):
+
+    distance_matrix = np.zeros((len(graphs), len(graphs)))
+
+    j = 0
+    for i in range(len(graphs)):
+
+        while j < len(graphs):
+
+            distance = dist_func(graphs[i], graphs[j])
+            distance_matrix[i, j] = distance
+            distance_matrix[j, i] = distance
+
+            j += 1
+
+        j = i + 1
+
+    return distance_matrix
+
+
+def __compute_cluster_assignment(centroid_indices, graphs, distance_matrix):
 
     labels = {}
 
@@ -16,7 +36,7 @@ def __compute_cluster_assignment(centroid_indices, graphs, dist_func):
 
         for centroid_index in centroid_indices:
 
-            dist = dist_func(graphs[centroid_index], graphs[graph_index])
+            dist = distance_matrix[centroid_index, graph_index]
 
             if dist < min_distance:
                 min_distance = dist
@@ -27,7 +47,7 @@ def __compute_cluster_assignment(centroid_indices, graphs, dist_func):
     return labels
 
 
-def __compute_new_cluster_centroids(labels, graphs, dist_func):
+def __compute_new_cluster_centroids(labels, graphs, distance_matrix):
 
     new_centroid_indices = []
 
@@ -42,7 +62,7 @@ def __compute_new_cluster_centroids(labels, graphs, dist_func):
 
             distance = 0
             for gi in cluster:
-                distance += dist_func(graphs[graph_index], graphs[gi])
+                distance += distance_matrix[graph_index, gi]
             average_dist = distance / len(cluster)
 
             if average_dist < min_average_dist:
@@ -69,14 +89,16 @@ def sd_kmeans(k, max_iters, seed, graphs, dist_func):
     num_iters = 0
     converged = False
 
+    distance_matrix = __get_distance_matrix(graphs, dist_func)
+
     # select k distinct graphs as the cluster centers
     centroid_indices = __get_random_centroids(k, seed, graphs)
 
     while not converged:
 
-        labels = __compute_cluster_assignment(centroid_indices, graphs, dist_func)
+        labels = __compute_cluster_assignment(centroid_indices, graphs, distance_matrix)
 
-        new_centroid_indices = __compute_new_cluster_centroids(labels, graphs, dist_func)
+        new_centroid_indices = __compute_new_cluster_centroids(labels, graphs, distance_matrix)
 
         num_iters += 1
 
