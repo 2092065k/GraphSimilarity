@@ -106,3 +106,8 @@ print sd_wcss
 
 # dist = delta_con(graphs[16], graphs[18])
 # print dist
+
+#---------------------------------------------------------------------------------------------
+
+# for seed in range(20):
+#     print sd_kmeans(2, 50, seed, graphs, delta_con)

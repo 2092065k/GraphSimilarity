@@ -15,20 +15,20 @@ def __root_ed(s1, s2):
 
     return root_ed
 
+def __fabp(g, e):
+
+    adj = g.get_adjacency_matrix()
+    diag = g.get_diagonal_matrix()
+    identity = np.identity(adj.shape[0])
+    s = np.linalg.inv(identity + (e ** 2) * diag - e * adj)
+    
+    return s
 
 # assumes all matrices are already computed
 def delta_con(g1, g2, e = 0.2):
 
-    a1 = g1.get_adjacency_matrix()
-    a2 = g2.get_adjacency_matrix()
-
-    d1 = g1.get_diagonal_matrix()
-    d2 = g2.get_diagonal_matrix()
-
-    i = np.identity(a1.shape[0])
-
-    s1 = np.linalg.inv(i + (e ** 2) * d1 - e * a1)
-    s2 = np.linalg.inv(i + (e ** 2) * d2 - e * a2)
+    s1 = __fabp(g1, e)
+    s2 = __fabp(g2, e)
 
     dist = __root_ed(s1, s2)
 
