@@ -1,11 +1,12 @@
 import sys
+import time
 import numpy as np
 
 from graphSimilarity.graph import Graph
 from graphSimilarity.data_loader import load_data
 from graphSimilarity.kernel_methods import rbf_kernel
 from graphSimilarity.graph_edit_distance import graph_edit_distance
-from graphSimilarity.delta_con import delta_con
+from graphSimilarity.delta_con import delta_con, fabp, root_ed
 from graphSimilarity.kernel_kmeans import kernel_kmeans, get_kernel_wcss
 from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss
 
@@ -64,18 +65,18 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-labels = kernel_kmeans(2, 50, 0, graphs, graph_edit_distance, rbf_kernel)
-print labels
+# labels = kernel_kmeans(2, 50, 0, graphs, graph_edit_distance, rbf_kernel)
+# print labels
 
-kernel_wcss = get_kernel_wcss(2, graphs, labels, graph_edit_distance, rbf_kernel)
-print kernel_wcss
+# kernel_wcss = get_kernel_wcss(2, graphs, labels, graph_edit_distance, rbf_kernel)
+# print kernel_wcss
 
 
-centroids = sd_kmeans(2, 50, 0, graphs, graph_edit_distance)
-print centroids
+# centroids = sd_kmeans(2, 50, 0, graphs, graph_edit_distance)
+# print centroids
 
-sd_wcss = get_sd_wcss(centroids, graphs, graph_edit_distance)
-print sd_wcss
+# sd_wcss = get_sd_wcss(centroids, graphs, graph_edit_distance)
+# print sd_wcss
 
 #---------------------------------------------------------------------------------------------
 
@@ -109,5 +110,62 @@ print sd_wcss
 
 #---------------------------------------------------------------------------------------------
 
-# for seed in range(20):
-#     print sd_kmeans(2, 50, seed, graphs, delta_con)
+
+# start = time.time()
+
+# for seed in range(200):
+#     sd_kmeans(2, 50, seed, graphs, graph_edit_distance)
+
+# end = time.time()
+# print end - start
+
+
+# start = time.time()
+
+# for seed in range(200):
+#     sd_kmeans(2, 50, seed, graphs, delta_con)
+
+# end = time.time()
+# print end - start
+
+
+# fabp_graphs = [fabp(g) for g in graphs]
+
+# start = time.time()
+
+# for seed in range(200):
+#     sd_kmeans(2, 50, seed, fabp_graphs, root_ed)
+
+# end = time.time()
+# print end - start
+
+
+#---------------------------------------------------------------------------------------------
+
+# start = time.time()
+
+# for seed in range(200):
+#     kernel_kmeans(2, 50, seed, graphs, graph_edit_distance, rbf_kernel)
+
+# end = time.time()
+# print end - start
+
+
+# start = time.time()
+
+# for seed in range(200):
+#     kernel_kmeans(2, 50, seed, graphs, delta_con, rbf_kernel)
+
+# end = time.time()
+# print end - start
+
+
+# fabp_graphs = [fabp(g) for g in graphs]
+
+# start = time.time()
+
+# for seed in range(200):
+#     kernel_kmeans(2, 50, seed, fabp_graphs, root_ed, rbf_kernel)
+
+# end = time.time()
+# print end - start
