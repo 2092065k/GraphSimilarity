@@ -43,6 +43,3 @@ def draw_all_graphs(file):
             num_nodes = int(line)
 
     draw_graph(num_nodes, edges)
-            
-
-#draw_all_graphs(sys.argv[1])

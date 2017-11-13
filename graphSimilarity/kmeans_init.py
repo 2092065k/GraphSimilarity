@@ -2,13 +2,13 @@ import random
 import numpy as np
 
 
-def __dist_from_centroid(graphs, centroid_indices, dist_func):
+def __dist_from_centroid(items, centroid_indices, dist_func):
 
     distances = []
 
-    for graph in graphs:
+    for item in items:
 
-        distances.append(min([dist_func(graph, graphs[centroid_index]) for centroid_index in centroid_indices]))
+        distances.append(min([dist_func(item, items[centroid_index]) for centroid_index in centroid_indices]))
 
     return np.array(distances)
 
@@ -22,23 +22,23 @@ def __choose_next_centroid(distances):
     return ind
 
 
-def kmeans_pp(k, seed, graphs, dist_func):
+def kmeans_pp(k, seed, items, dist_func):
 
     random.seed(seed)
     np.random.seed(seed)
 
-    centroid_indices = random.sample(range(len(graphs)), 1)
+    centroid_indices = random.sample(range(len(items)), 1)
 
     while len(centroid_indices) < k:
 
-        distances = __dist_from_centroid(graphs, centroid_indices, dist_func)
+        distances = __dist_from_centroid(items, centroid_indices, dist_func)
         next_centroid_index = __choose_next_centroid(distances)
         centroid_indices.append(next_centroid_index)
 
     return centroid_indices
 
 
-def get_random_centroids(k, seed, graphs):
+def get_random_centroids(k, seed, items):
 
     random.seed(seed)
-    return random.sample(range(len(graphs)), k)
+    return random.sample(range(len(items)), k)

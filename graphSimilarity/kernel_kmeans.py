@@ -3,16 +3,16 @@ from copy import deepcopy
 from kmeans_init import get_random_centroids, kmeans_pp
 
 
-def __get_kernel_matrix(graphs, dist_func, kernel):
+def __get_kernel_matrix(items, dist_func, kernel):
 
-    kernel_matrix = np.zeros((len(graphs), len(graphs)))
+    kernel_matrix = np.zeros((len(items), len(items)))
 
     j = 0
-    for i in range(len(graphs)):
+    for i in range(len(items)):
 
-        while j < len(graphs):
+        while j < len(items):
 
-            kernel_res = kernel(graphs[i], graphs[j], dist_func)
+            kernel_res = kernel(items[i], items[j], dist_func)
             kernel_matrix[i, j] = kernel_res
             kernel_matrix[j, i] = kernel_res
 
@@ -23,7 +23,7 @@ def __get_kernel_matrix(graphs, dist_func, kernel):
     return kernel_matrix
 
 
-def __get_graph_indices_per_cluster(k, labels):
+def __get_item_indices_per_cluster(k, labels):
 
     indices_per_cluster = [[] for x in range(k)]
     for i in range(len(labels)):
@@ -32,60 +32,60 @@ def __get_graph_indices_per_cluster(k, labels):
     return indices_per_cluster
 
 
-def __distance_to_centroid(graph_index, centroid_index, graph_indices_per_cluster, kernel_matrix):
+def __distance_to_centroid(item_index, centroid_index, item_indices_per_cluster, kernel_matrix):
 
-    graph_indices_in_cluster = graph_indices_per_cluster[centroid_index]
-    num_graphs_in_cluster = len(graph_indices_in_cluster)
+    item_indices_in_cluster = item_indices_per_cluster[centroid_index]
+    num_items_in_cluster = len(item_indices_in_cluster)
 
-    param1 = kernel_matrix[graph_index, graph_index]
+    param1 = kernel_matrix[item_index, item_index]
     param2 = 0
     param3 = 0
 
-    # check in case there are no graphs assigned to the cluster
-    if num_graphs_in_cluster != 0:
+    # check in case there are no items assigned to the cluster
+    if num_items_in_cluster != 0:
 
         kernel_sum = 0
-        for i in graph_indices_in_cluster:
-            kernel_sum += kernel_matrix[graph_index, i]
+        for i in item_indices_in_cluster:
+            kernel_sum += kernel_matrix[item_index, i]
 
-        param2 = (-2 * kernel_sum) / num_graphs_in_cluster
+        param2 = (-2 * kernel_sum) / num_items_in_cluster
 
         kernel_sum = 0
-        for i in graph_indices_in_cluster:
-            for j in graph_indices_in_cluster:
+        for i in item_indices_in_cluster:
+            for j in item_indices_in_cluster:
                 kernel_sum += kernel_matrix[i, j]
 
-        param3 = kernel_sum / (num_graphs_in_cluster ** 2)
+        param3 = kernel_sum / (num_items_in_cluster ** 2)
 
     distance = param1 + param2 + param3
 
     return distance
 
 
-def __random_cluster_assignment(k, seed, graphs):
+def __random_cluster_assignment(k, seed, items):
 
     np.random.seed(seed)
-    labels = [np.random.randint(0, k) for x in range(len(graphs))]
+    labels = [np.random.randint(0, k) for x in range(len(items))]
     return labels
 
 
-def __proximity_cluster_assignment(k, seed, graphs, dist_func, init):
+def __proximity_cluster_assignment(k, seed, items, dist_func, init):
 
     if init == "proxy":
-        centroid_indices = get_random_centroids(k, seed, graphs)
+        centroid_indices = get_random_centroids(k, seed, items)
     else:
-        centroid_indices = kmeans_pp(k, seed, graphs, dist_func)
+        centroid_indices = kmeans_pp(k, seed, items, dist_func)
 
     labels = []
 
-    for graph in graphs:
+    for item in items:
 
         min_distance = float("inf")
         closest_centroid = -1
 
         for label in range(len(centroid_indices)):
 
-            dist = dist_func(graph, graphs[centroid_indices[label]])
+            dist = dist_func(item, items[centroid_indices[label]])
 
             if dist < min_distance:
                 min_distance = dist
@@ -96,26 +96,26 @@ def __proximity_cluster_assignment(k, seed, graphs, dist_func, init):
     return labels
 
 
-def kernel_kmeans(k, max_iters, seed, graphs, dist_func, kernel, init = "random"):
+def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random"):
 
     num_iters = 0
     converged = False
 
     # compute kernel matrix
-    kernel_matrix = __get_kernel_matrix(graphs, dist_func, kernel)
+    kernel_matrix = __get_kernel_matrix(items, dist_func, kernel)
 
     # initial assignment of cluster membership
     if init == "random":
-        labels = __random_cluster_assignment(k, seed, graphs)
+        labels = __random_cluster_assignment(k, seed, items)
     else:
-        labels = __proximity_cluster_assignment(k, seed, graphs, dist_func, init)
+        labels = __proximity_cluster_assignment(k, seed, items, dist_func, init)
 
     while not converged:
 
-        graph_indices_per_cluster = __get_graph_indices_per_cluster(k, labels)
+        item_indices_per_cluster = __get_item_indices_per_cluster(k, labels)
         old_labels = deepcopy(labels)
 
-        for graph_index in range(len(graphs)):
+        for item_index in range(len(items)):
 
             min_distance = float("inf")
             closest_centroid = -1
@@ -123,16 +123,16 @@ def kernel_kmeans(k, max_iters, seed, graphs, dist_func, kernel, init = "random"
             # find the nearest cluster centoid
             for centroid_index in range(k):
 
-                dist = __distance_to_centroid(graph_index, centroid_index, graph_indices_per_cluster, kernel_matrix)
+                dist = __distance_to_centroid(item_index, centroid_index, item_indices_per_cluster, kernel_matrix)
                 if dist < min_distance:
                     min_distance = dist
                     closest_centroid = centroid_index
 
-            # update the label of the graph
-            labels[graph_index] = closest_centroid
+            # update the label of the item
+            labels[item_index] = closest_centroid
 
             # TODO: compute update more efficiently
-            graph_indices_per_cluster = __get_graph_indices_per_cluster(k, labels)
+            item_indices_per_cluster = __get_item_indices_per_cluster(k, labels)
 
         num_iters += 1
 
@@ -142,14 +142,14 @@ def kernel_kmeans(k, max_iters, seed, graphs, dist_func, kernel, init = "random"
     return labels
 
 
-def get_kernel_wcss(k, graphs, labels, dist_func, kernel):
+def get_kernel_wcss(k, items, labels, dist_func, kernel):
 
     wcss = 0
-    kernel_matrix = __get_kernel_matrix(graphs, dist_func, kernel)
-    graph_indices_per_cluster = __get_graph_indices_per_cluster(k, labels)
+    kernel_matrix = __get_kernel_matrix(items, dist_func, kernel)
+    item_indices_per_cluster = __get_item_indices_per_cluster(k, labels)
 
-    for i in range(len(graphs)):
-        squared_dist = __distance_to_centroid(i, labels[i], graph_indices_per_cluster, kernel_matrix)
+    for i in range(len(items)):
+        squared_dist = __distance_to_centroid(i, labels[i], item_indices_per_cluster, kernel_matrix)
         wcss += squared_dist
 
     return wcss
