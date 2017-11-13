@@ -1,6 +1,6 @@
 import numpy as np
 from copy import deepcopy
-from graph import Graph
+from kmeans_init import get_random_centroids, kmeans_pp
 
 
 def __get_kernel_matrix(graphs, dist_func, kernel):
@@ -69,14 +69,12 @@ def __random_cluster_assignment(k, seed, graphs):
     return labels
 
 
-def __proximity_cluster_assignment(k, seed, graphs, dist_func):
+def __proximity_cluster_assignment(k, seed, graphs, dist_func, init):
 
-    np.random.seed(seed)
-    unique_random_indices = set()
-    while len(unique_random_indices) < k:
-        unique_random_indices.add(np.random.randint(0, len(graphs)))
-
-    centroid_indices = list(unique_random_indices)
+    if init == "proxy":
+        centroid_indices = get_random_centroids(k, seed, graphs)
+    else:
+        centroid_indices = kmeans_pp(k, seed, graphs, dist_func)
 
     labels = []
 
@@ -110,7 +108,7 @@ def kernel_kmeans(k, max_iters, seed, graphs, dist_func, kernel, init = "random"
     if init == "random":
         labels = __random_cluster_assignment(k, seed, graphs)
     else:
-        labels = __proximity_cluster_assignment(k, seed, graphs, dist_func)
+        labels = __proximity_cluster_assignment(k, seed, graphs, dist_func, init)
 
     while not converged:
 

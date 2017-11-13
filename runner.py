@@ -9,6 +9,7 @@ from graphSimilarity.graph_edit_distance import graph_edit_distance
 from graphSimilarity.delta_con import delta_con, fabp, root_ed
 from graphSimilarity.kernel_kmeans import kernel_kmeans, get_kernel_wcss
 from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss
+from graphSimilarity.kmeans_init import get_random_centroids, kmeans_pp
 
 
 #graph = Graph(2, [(0, 1)])
@@ -42,7 +43,7 @@ for graph in graphs:
 
 # res = []
 # for seed in range(1000):
-#     res.append(kernel_kmeans(2, 50, seed, graphs, graph_edit_distance, rbf_kernel))
+#     res.append(kernel_kmeans(2, 50, seed, graphs, graph_edit_distance, rbf_kernel, "random"))
 
 # correct = 0
 # wrong = 0
@@ -60,8 +61,13 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-#for seed in range(200):
-#    print kernel_kmeans(2, 50, seed, graphs, graph_edit_distance, rbf_kernel)
+# for seed in range(200):
+#    print kernel_kmeans(2, 50, seed, graphs, graph_edit_distance, rbf_kernel, "random")
+
+#---------------------------------------------------------------------------------------------
+
+# for seed in range(200):
+#    print sd_kmeans(2, 50, seed, graphs, delta_con, "random")
 
 #---------------------------------------------------------------------------------------------
 

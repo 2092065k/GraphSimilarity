@@ -1,5 +1,5 @@
 from math import exp
-from graph import Graph
+
 
 def rbf_kernel(g1, g2, dist_func, sigma = 0.1):
 

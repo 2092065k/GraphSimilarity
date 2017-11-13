@@ -1,5 +1,5 @@
 import numpy as np
-from graph import Graph
+from kmeans_init import get_random_centroids, kmeans_pp
 
 
 def __get_distance_matrix(graphs, dist_func):
@@ -74,17 +74,7 @@ def __compute_new_cluster_centroids(labels, graphs, distance_matrix):
     return new_centroid_indices
 
 
-def __get_random_centroids(k, seed, graphs):
-
-    np.random.seed(seed)
-    unique_random_indices = set()
-    while len(unique_random_indices) < k:
-        unique_random_indices.add(np.random.randint(0, len(graphs)))
-
-    return list(unique_random_indices)
-
-
-def sd_kmeans(k, max_iters, seed, graphs, dist_func):
+def sd_kmeans(k, max_iters, seed, graphs, dist_func, init = "random"):
 
     num_iters = 0
     converged = False
@@ -92,7 +82,10 @@ def sd_kmeans(k, max_iters, seed, graphs, dist_func):
     distance_matrix = __get_distance_matrix(graphs, dist_func)
 
     # select k distinct graphs as the cluster centers
-    centroid_indices = __get_random_centroids(k, seed, graphs)
+    if init == "random":
+        centroid_indices = get_random_centroids(k, seed, graphs)
+    else:
+        centroid_indices = kmeans_pp(k, seed, graphs, dist_func)
 
     while not converged:
 
