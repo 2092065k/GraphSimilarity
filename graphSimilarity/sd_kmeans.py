@@ -113,7 +113,8 @@ def sd_kmeans(k, max_iters, seed, graphs, dist_func):
 def get_sd_wcss(centroid_indices, graphs, dist_func):
 
     wcss = 0
-    labels = __compute_cluster_assignment(centroid_indices, graphs, dist_func)
+    distance_matrix = __get_distance_matrix(graphs, dist_func)
+    labels = __compute_cluster_assignment(centroid_indices, graphs, distance_matrix)
 
     for centoid_index in labels:
         for graph_index in labels[centoid_index]:
