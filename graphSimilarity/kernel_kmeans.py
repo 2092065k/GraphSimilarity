@@ -110,13 +110,15 @@ def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random")
     else:
         labels = __proximity_cluster_assignment(k, seed, items, dist_func, init)
 
+    item_indices_per_cluster = __get_item_indices_per_cluster(k, labels)
+
     while not converged:
 
-        item_indices_per_cluster = __get_item_indices_per_cluster(k, labels)
         old_labels = deepcopy(labels)
 
         for item_index in range(len(items)):
 
+            old_label = labels[item_index]
             min_distance = float("inf")
             closest_centroid = -1
 
@@ -131,8 +133,11 @@ def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random")
             # update the label of the item
             labels[item_index] = closest_centroid
 
-            # TODO: compute update more efficiently
-            item_indices_per_cluster = __get_item_indices_per_cluster(k, labels)
+            # update the item's cluster assignment
+            if old_label != closest_centroid:
+                item_indices_per_cluster[old_label].remove(item_index)
+                item_indices_per_cluster[closest_centroid].append(item_index)
+
 
         num_iters += 1
 
