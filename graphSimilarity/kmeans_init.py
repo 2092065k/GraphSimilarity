@@ -22,6 +22,26 @@ def __choose_next_centroid(distances):
     return ind
 
 
+# def __choose_next_centroid(distances):
+
+#     probs = distances / distances.sum()
+#     cumprobs = probs.cumsum()
+
+#     max_prob = max(probs)
+#     average_prob = 1.0 / len(distances)
+#     likely_prob = (max_prob + average_prob) / 2.0
+#     likely_choice = False
+
+#     while not likely_choice:
+#         rand = np.random.random()
+#         ind = np.where(cumprobs >= rand)[0][0]
+
+#         if probs[ind] >= likely_prob:
+#             likely_choice = True
+
+#     return ind
+
+
 def kmeans_pp(k, seed, items, dist_func):
 
     random.seed(seed)
