@@ -11,6 +11,8 @@ from graphSimilarity.kernel_kmeans import kernel_kmeans, get_kernel_wcss
 from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss
 from graphSimilarity.kmeans_init import get_random_centroids, kmeans_pp
 
+from graphSimilarity.kernel_kmeans import __get_kernel_matrix
+from sklearn.cluster import SpectralClustering
 
 #graph = Graph(2, [(0, 1)])
 #print(graph.get_num_vertices())
@@ -172,6 +174,47 @@ for graph in graphs:
 
 # for seed in range(200):
 #     kernel_kmeans(2, 50, seed, fabp_graphs, root_ed, rbf_kernel)
+
+# end = time.time()
+# print end - start
+
+#---------------------------------------------------------------------------------------------
+
+# kernel_matrix = __get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
+
+# spectral_kmeans = SpectralClustering(n_clusters=2, random_state=0, n_init=1, affinity='precomputed').fit(kernel_matrix)
+
+# print spectral_kmeans.labels_
+
+#---------------------------------------------------------------------------------------------
+
+# kernel_matrix = __get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
+
+# res = []
+# for seed in range(1000):
+#     spectral_kmeans = SpectralClustering(n_clusters=2, random_state=seed, n_init=1, affinity='precomputed').fit(kernel_matrix)
+#     res.append(spectral_kmeans.labels_)
+
+# correct = 0
+# wrong = 0
+
+# for items in res:
+#     if all(x == items[0] for x in items[:10]) and all(x == items[10] for x in items[10:]) and  not all(x == items[0] for x in items):
+#         correct +=1
+#     else:
+#         wrong +=1
+
+# print "Correct: " + str(correct)
+# print "Wrong: " + str(wrong)
+
+#---------------------------------------------------------------------------------------------
+
+# start = time.time()
+
+# kernel_matrix = __get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
+
+# for seed in range(200):
+#     SpectralClustering(n_clusters=2, random_state=seed, n_init=1, affinity='precomputed').fit(kernel_matrix)
 
 # end = time.time()
 # print end - start
