@@ -1,5 +1,3 @@
-import sys
-import numpy as np
 from graph import Graph
 
 def load_data(file):

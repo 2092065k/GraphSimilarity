@@ -13,13 +13,13 @@ class Graph:
     def get_edges(self):
         return self.edges
 
-    # currently undirected
-    def compute_adjacency_matrix(self):
+    def compute_adjacency_matrix(self, directed = False):
         adjacency_matrix = np.zeros((self.num_vertices, self.num_vertices))
         for edge in self.edges:
             i, j = edge
             adjacency_matrix[i, j] = 1
-            adjacency_matrix[j, i] = 1
+            if not directed:
+                adjacency_matrix[j, i] = 1
 
         self.adjacency_matrix = adjacency_matrix
 
@@ -28,7 +28,7 @@ class Graph:
 
     def compute_diagonal_matrix(self):
         diagonal_matrix = np.zeros(self.adjacency_matrix.shape)
-        np.fill_diagonal(diagonal_matrix, sum(self.adjacency_matrix))
+        np.fill_diagonal(diagonal_matrix, self.adjacency_matrix.sum(axis=1))
         self.diagonal_matrix = diagonal_matrix
 
     def get_diagonal_matrix(self):
