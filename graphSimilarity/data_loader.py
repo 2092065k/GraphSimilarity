@@ -12,7 +12,7 @@ def load_data(file):
 
         line_elements = line.split()
 
-        if len(line_elements) == 2:
+        if len(line_elements) == 3:
             edge = map(lambda x: int(x), line_elements)
             edges.append(edge)
 

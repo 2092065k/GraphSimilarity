@@ -16,10 +16,10 @@ class Graph:
     def compute_adjacency_matrix(self, directed = False):
         adjacency_matrix = np.zeros((self.num_vertices, self.num_vertices))
         for edge in self.edges:
-            i, j = edge
-            adjacency_matrix[i, j] = 1
+            i, j, weight = edge
+            adjacency_matrix[i, j] = weight
             if not directed:
-                adjacency_matrix[j, i] = 1
+                adjacency_matrix[j, i] = weight
 
         self.adjacency_matrix = adjacency_matrix
 

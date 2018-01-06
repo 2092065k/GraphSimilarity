@@ -31,9 +31,9 @@ def draw_all_graphs(file):
         line_elements = line.split()
 
         # parse more data on the current graph
-        if len(line_elements) == 2:
+        if len(line_elements) == 3:
             edge = map(lambda x: int(x), line_elements)
-            edges.append(edge)
+            edges.append(edge[:2])
 
         # animate the graph and clear
         elif len(line_elements) == 1:

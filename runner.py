@@ -4,6 +4,7 @@ import numpy as np
 
 from graphSimilarity.graph import Graph
 from graphSimilarity.data_loader import load_data
+from graphSimilarity.animator import draw_all_graphs
 from graphSimilarity.kernel_methods import rbf_kernel
 from graphSimilarity.graph_edit_distance import graph_edit_distance
 from graphSimilarity.delta_con import delta_con, fabp, root_ed
@@ -32,7 +33,6 @@ graphs = load_data(sys.argv[1])
 for graph in graphs:
     graph.compute_adjacency_matrix()
     graph.compute_diagonal_matrix()
-
 
 #---------------------------------------------------------------------------------------------
 
