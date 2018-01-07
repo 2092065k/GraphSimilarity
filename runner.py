@@ -15,6 +15,8 @@ from graphSimilarity.kmeans_init import get_random_centroids, kmeans_pp
 from graphSimilarity.kernel_kmeans import __get_kernel_matrix
 from sklearn.cluster import SpectralClustering
 
+from graphSimilarity.graph_generator import generate_graphs_file
+
 #graph = Graph(2, [(0, 1)])
 #print(graph.get_num_vertices())
 #graph.compute_adjacency_matrix()
@@ -218,3 +220,8 @@ for graph in graphs:
 
 # end = time.time()
 # print end - start
+
+#---------------------------------------------------------------------------------------------
+
+#generate_graphs_file("test.txt", 4, 10, 0)
+#draw_all_graphs("test.txt")
