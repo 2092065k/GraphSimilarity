@@ -34,6 +34,5 @@ def generate_graphs_file(file_name, num_of_graphs, num_of_nodes, seed,
 
             file.write(str(node1) + ' ' + str(node2) + ' ' + str(weight) + '\n')
 
-    file.write('\n')
     file.close()
     return 0
