@@ -2,9 +2,8 @@ import sys
 import time
 import numpy as np
 
+from graphSimilarity.utils import *
 from graphSimilarity.graph import Graph
-from graphSimilarity.data_loader import load_data
-from graphSimilarity.animator import draw_all_graphs
 from graphSimilarity.kernel_methods import rbf_kernel
 from graphSimilarity.graph_edit_distance import graph_edit_distance
 from graphSimilarity.delta_con import delta_con, fabp, root_ed
