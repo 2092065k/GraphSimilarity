@@ -63,6 +63,7 @@ def __compute_new_cluster_centroids(labels, items, distance_matrix):
             distance = 0
             for i_i in cluster:
                 distance += distance_matrix[item_index, i_i]
+            
             average_dist = distance / len(cluster)
 
             if average_dist < min_average_dist:
@@ -103,16 +104,36 @@ def sd_kmeans(k, max_iters, seed, items, dist_func, init = "random"):
     return centroid_indices
 
 
+def get_sd_labels(centroid_indices, items, dist_func):
+
+    labels = []
+
+    for item in items:
+        
+        min_distance = float("inf")
+        label = -1
+
+        for index in range(len(centroid_indices)):
+
+            dist = dist_func(items[centroid_indices[index]], item)
+
+            if dist < min_distance:
+                min_distance = dist
+                label = index
+
+        labels.append(label)
+
+    return labels
+
+
 def get_sd_wcss(centroid_indices, items, dist_func):
 
     wcss = 0
-    distance_matrix = __get_distance_matrix(items, dist_func)
-    labels = __compute_cluster_assignment(centroid_indices, items, distance_matrix)
+    labels = get_sd_labels(centroid_indices, items, dist_func)
 
-    for centoid_index in labels:
-        for item_index in labels[centoid_index]:
-            
-            squared_dist = dist_func(items[item_index], items[centoid_index]) ** 2
-            wcss += squared_dist
+    for item_index in range(len(labels)):
+        centroid_index = centroid_indices[labels[item_index]]
+        squared_dist = dist_func(items[item_index], items[centroid_index])  ** 2
+        wcss += squared_dist
 
     return wcss

@@ -8,7 +8,7 @@ from graphSimilarity.kernel_methods import rbf_kernel
 from graphSimilarity.graph_edit_distance import graph_edit_distance
 from graphSimilarity.delta_con import delta_con, fabp, root_ed
 from graphSimilarity.kernel_kmeans import kernel_kmeans, get_kernel_wcss
-from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss
+from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss, get_sd_labels
 from graphSimilarity.kmeans_init import get_random_centroids, kmeans_pp
 
 from graphSimilarity.kernel_kmeans import __get_kernel_matrix
@@ -83,6 +83,9 @@ for graph in graphs:
 
 # centroids = sd_kmeans(2, 50, 0, graphs, graph_edit_distance)
 # print centroids
+
+# labels = get_sd_labels(centroids, graphs, graph_edit_distance)
+# print labels
 
 # sd_wcss = get_sd_wcss(centroids, graphs, graph_edit_distance)
 # print sd_wcss
@@ -222,5 +225,5 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-#generate_graphs_file("test.txt", 4, 10, 0)
-#draw_all_graphs("test.txt")
+# generate_graphs_file("test.txt", 4, 10, 0)
+# draw_all_graphs("test.txt")
