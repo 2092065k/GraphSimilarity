@@ -1,5 +1,6 @@
 import os
 import sys
+import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -107,3 +108,28 @@ def create_basic_edgelist_files(graphs, dir_name, common_node = False):
 
         file.close()
 
+
+def load_matrix_data(file, lines_per_matrix):
+    'Load a file with concatenated matrix data'
+
+    matrices = []
+    file = open(file, 'r')
+
+    matrix = []
+    num_lines = 0
+
+    for line in file:
+
+        row = [float(num) for num in line.split()]
+        matrix.append(row)
+        num_lines += 1
+
+        if num_lines == lines_per_matrix:
+
+            matrices.append(np.matrix(matrix))
+            num_lines = 0
+            matrix = []
+
+    file.close()
+
+    return matrices

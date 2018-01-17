@@ -231,3 +231,7 @@ for graph in graphs:
 #---------------------------------------------------------------------------------------------
 
 # create_basic_edgelist_files(graphs, "/home/aquila/Desktop/graphDir", common_node = True)
+
+#---------------------------------------------------------------------------------------------
+
+# matrices = load_matrix_data("/home/aquila/CS/L5P/formatConversion/outDir/data.txt", 11)
