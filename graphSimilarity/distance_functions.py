@@ -49,3 +49,15 @@ def delta_con(g1, g2, e = 0.2):
     dist = root_ed(s1, s2)
 
     return dist
+
+# --- Matrix Euclidean Distance ---
+
+def matrix_ed(m1, m2):
+
+	dist = 0
+
+	for i in range(m1.shape[0]):
+
+		dist += np.linalg.norm(m1[i] - m2[i])
+
+	return dist

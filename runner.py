@@ -234,3 +234,17 @@ for graph in graphs:
 #---------------------------------------------------------------------------------------------
 
 # matrices = load_matrix_data("/home/aquila/CS/L5P/formatConversion/outDir/data.txt", 11)
+# print matrix_ed(matrices[16], matrices[15])
+
+#---------------------------------------------------------------------------------------------
+
+# matrices = load_matrix_data("/home/aquila/CS/L5P/formatConversion/outDir/data.txt", 11)
+
+# labels = kernel_kmeans(2, 50, 0, matrices, matrix_ed, rbf_kernel)
+# print labels
+
+# centroids = sd_kmeans(2, 50, 0, matrices, matrix_ed)
+# print centroids
+
+# labels = get_sd_labels(centroids, matrices, matrix_ed)
+# print labels
