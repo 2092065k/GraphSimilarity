@@ -227,3 +227,7 @@ for graph in graphs:
 
 # generate_graphs_file("test.txt", 4, 10, 0)
 # draw_all_graphs("test.txt")
+
+#---------------------------------------------------------------------------------------------
+
+# create_basic_edgelist_files(graphs, "/home/aquila/Desktop/graphDir", common_node = True)
