@@ -1,6 +1,21 @@
 import numpy as np
 from graph import Graph
 
+# All algorithms assume that the relevant graph matrices are already computed 
+
+# --- Graph Edit Distance ---
+
+def graph_edit_distance(g1, g2):
+    'The sum of the number of edges that are present only in g1 or g2'
+
+    m1 = g1.get_adjacency_matrix()
+    m2 = g2.get_adjacency_matrix()
+
+    diff = m1 - m2
+
+    return sum(sum(abs(diff)))
+
+# --- DeltaCon ---
 
 def root_ed(s1, s2):
 
@@ -15,6 +30,7 @@ def root_ed(s1, s2):
 
     return root_ed
 
+
 def fabp(g, e = 0.2):
 
     adj = g.get_adjacency_matrix()
@@ -24,7 +40,7 @@ def fabp(g, e = 0.2):
     
     return s
 
-# assumes all matrices are already computed
+
 def delta_con(g1, g2, e = 0.2):
 
     s1 = fabp(g1, e)

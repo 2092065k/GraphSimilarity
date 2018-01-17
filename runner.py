@@ -5,8 +5,7 @@ import numpy as np
 from graphSimilarity.utils import *
 from graphSimilarity.graph import Graph
 from graphSimilarity.kernel_methods import rbf_kernel
-from graphSimilarity.graph_edit_distance import graph_edit_distance
-from graphSimilarity.delta_con import delta_con, fabp, root_ed
+from graphSimilarity.distance_functions import *
 from graphSimilarity.kernel_kmeans import kernel_kmeans, get_kernel_wcss
 from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss, get_sd_labels
 from graphSimilarity.kmeans_init import get_random_centroids, kmeans_pp
