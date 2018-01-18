@@ -85,8 +85,6 @@ def load_data(file):
 def create_basic_edgelist_files(graphs, dir_name, common_node = False):
     'Creates files with basic edge list representations of the graphs'
 
-    os.makedirs(dir_name)
-
     for index in range(len(graphs)):
 
         file = open(dir_name + '/' + "graph" + str(index) + ".txt", "w")

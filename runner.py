@@ -229,7 +229,7 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# create_basic_edgelist_files(graphs, "/home/aquila/Desktop/graphDir", common_node = True)
+# create_basic_edgelist_files(graphs, "/home/aquila/CS/L5P/formatConversion/graphDir", common_node = True)
 
 #---------------------------------------------------------------------------------------------
 
