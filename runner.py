@@ -248,3 +248,23 @@ for graph in graphs:
 
 # labels = get_sd_labels(centroids, matrices, matrix_ed)
 # print labels
+
+#---------------------------------------------------------------------------------------------
+
+# matrices = load_matrix_data("/home/aquila/CS/L5P/formatConversion/outDir/data.txt", 11)
+
+# res = []
+# for seed in range(200):
+#     res.append(kernel_kmeans(2, 50, seed, matrices, root_ed, rbf_kernel))
+
+# correct = 0
+# wrong = 0
+
+# for items in res:
+#     if all(x == items[0] for x in items[:10]) and all(x == items[10] for x in items[10:]) and  not all(x == items[0] for x in items):
+#         correct +=1
+#     else:
+#         wrong +=1
+
+# print "Correct: " + str(correct)
+# print "Wrong: " + str(wrong)
