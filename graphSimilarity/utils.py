@@ -89,9 +89,10 @@ def create_basic_edgelist_files(graphs, dir_name, common_node = False):
 
         file = open(dir_name + '/' + "graph" + str(index) + ".txt", "w")
         graph = graphs[index]
-        num_vertices = graph.get_num_vertices()
 
         if common_node:
+
+            num_vertices = graph.get_num_vertices()
 
             for i in range(num_vertices):
                 file.write("0 " + str(i + 1) + '\n')
@@ -103,6 +104,35 @@ def create_basic_edgelist_files(graphs, dir_name, common_node = False):
 
             for edge in graph.get_edges():
                 file.write(str(edge[0]) + ' ' + str(edge[1]) + '\n')
+
+        file.close()
+
+
+def create_basic_adjacency_files(graphs, dir_name):
+    'Creates files with basic adjacency list representations of the graphs'
+
+    for index in range(len(graphs)):
+
+        file = open(dir_name + '/' + "graph" + str(index) + ".txt", "w")
+        graph = graphs[index]
+        num_vertices = graph.get_num_vertices()
+
+        # assumes adjacency matrix is computed
+        adj_matrix = graph.get_adjacency_matrix()
+
+        for vertex in range(num_vertices):
+
+            file.write(str(vertex) + " ")
+            row = adj_matrix[vertex]
+
+            for v in range(len(row)):
+
+                if row[v] != 0:
+                    file.write(str(v) + " ")
+
+            # do not print a new line after the final row
+            if vertex != num_vertices - 1:
+                file.write("\n")
 
         file.close()
 

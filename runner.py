@@ -268,3 +268,7 @@ for graph in graphs:
 
 # print "Correct: " + str(correct)
 # print "Wrong: " + str(wrong)
+
+#---------------------------------------------------------------------------------------------
+
+# create_basic_adjacency_files(graphs, "/home/aquila/Desktop/test")
