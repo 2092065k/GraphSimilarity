@@ -271,4 +271,42 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# create_basic_adjacency_files(graphs, "/home/aquila/Desktop/test")
+# create_basic_adjacency_files(graphs, "/home/aquila/CS/L5P/formatConversion2/graphDir")
+
+#---------------------------------------------------------------------------------------------
+
+# matrices = load_deep_walk_files("/home/aquila/CS/L5P/formatConversion2/outDir", 10)
+# print matrix_ed(matrices[1], matrices[15])
+
+#---------------------------------------------------------------------------------------------
+
+# matrices = load_deep_walk_files("/home/aquila/CS/L5P/formatConversion2/outDir", 10)
+
+# labels = kernel_kmeans(2, 50, 0, matrices, matrix_ed, rbf_kernel)
+# print labels
+
+# centroids = sd_kmeans(2, 50, 0, matrices, matrix_ed)
+# print centroids
+
+# labels = get_sd_labels(centroids, matrices, matrix_ed)
+# print labels
+
+#---------------------------------------------------------------------------------------------
+
+# matrices = load_deep_walk_files("/home/aquila/CS/L5P/formatConversion2/outDir", 10)
+
+# res = []
+# for seed in range(200):
+#     res.append(kernel_kmeans(2, 50, seed, matrices, matrix_ed, rbf_kernel))
+
+# correct = 0
+# wrong = 0
+
+# for items in res:
+#     if all(x == items[0] for x in items[:10]) and all(x == items[10] for x in items[10:]) and  not all(x == items[0] for x in items):
+#         correct +=1
+#     else:
+#         wrong +=1
+
+# print "Correct: " + str(correct)
+# print "Wrong: " + str(wrong)

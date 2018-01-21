@@ -161,3 +161,34 @@ def load_matrix_data(file, lines_per_matrix):
     file.close()
 
     return matrices
+
+
+def load_deep_walk_files(dir_name, lines_per_matrix):
+    'Load all DeepWalk formated files from a directory'
+
+    matrices = []
+    num_files = len(os.listdir(dir_name))
+
+    for index in range(num_files):
+
+        file = open(dir_name + '/' + "graph" + str(index) + ".txt", "r")
+        adj_dict = {}
+        matrix = []
+
+        # discard the first line of each file - unneeded metadata
+        line = file.readline()
+
+        for line in file:
+            row = [float(num) for num in line.split()]
+            adj_dict[row[0]] = row[1:]
+
+        for i in range(lines_per_matrix):
+            matrix.append(adj_dict[i])
+
+        matrices.append(np.matrix(matrix))
+        adj_dict = {}
+        matrix = []
+
+        file.close()
+
+    return matrices
