@@ -13,6 +13,9 @@ from graphSimilarity.kmeans_init import get_random_centroids, kmeans_pp
 from graphSimilarity.kernel_kmeans import __get_kernel_matrix
 from sklearn.cluster import SpectralClustering
 
+from graphSimilarity.sd_kmeans import __get_distance_matrix
+from sklearn.metrics import silhouette_samples, silhouette_score
+
 from graphSimilarity.graph_generator import generate_graphs_file
 
 #graph = Graph(2, [(0, 1)])
@@ -310,3 +313,16 @@ for graph in graphs:
 
 # print "Correct: " + str(correct)
 # print "Wrong: " + str(wrong)
+
+#---------------------------------------------------------------------------------------------
+
+# labels = [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1]
+
+# dist_matrix = __get_distance_matrix(graphs, graph_edit_distance)
+# print silhouette_score(dist_matrix, labels, metric=matrix_ed)
+
+# matrices = load_matrix_data("/home/aquila/CS/L5P/formatConversion/outDir/data.txt", 11)
+# matrices = load_deep_walk_files("/home/aquila/CS/L5P/formatConversion2/outDir", 10)
+
+# dist_matrix = __get_distance_matrix(matrices, matrix_ed)
+# print silhouette_score(dist_matrix, labels, metric=matrix_ed)
