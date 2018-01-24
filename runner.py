@@ -326,3 +326,8 @@ for graph in graphs:
 
 # dist_matrix = __get_distance_matrix(matrices, matrix_ed)
 # print silhouette_score(dist_matrix, labels, metric=matrix_ed)
+
+#---------------------------------------------------------------------------------------------
+
+# print sim_rank(graphs[0], 0.8, 10)
+# print sim_rank_distance(graphs[0], graphs[1])

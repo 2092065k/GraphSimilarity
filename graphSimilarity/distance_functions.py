@@ -50,6 +50,33 @@ def delta_con(g1, g2, e = 0.2):
 
     return dist
 
+# --- SimRank Distance ---
+
+def sim_rank(g, c = 0.8, max_iters = 10):
+
+    adj = g.get_adjacency_matrix()
+    col_degree = adj.sum(axis = 0)
+    col_degree = [x if x != 0 else 1 for x in col_degree]
+    col_norm_adj = np.matrix(adj / col_degree)
+
+    s = np.identity(adj.shape[0])
+    
+    for i in range(max_iters):
+
+        s = c * (col_norm_adj.T * s * col_norm_adj)
+        np.fill_diagonal(s, np.ones(adj.shape[0]))
+
+    return s
+
+def sim_rank_distance(g1, g2, c = 0.8, max_iters = 10):
+
+    s1 = sim_rank(g1, c, max_iters)
+    s2 = sim_rank(g2, c, max_iters)
+
+    dist = root_ed(s1, s2)
+
+    return dist
+
 # --- Matrix Euclidean Distance ---
 
 def matrix_ed(m1, m2):
