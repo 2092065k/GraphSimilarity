@@ -73,7 +73,7 @@ def sim_rank_distance(g1, g2, c = 0.8, max_iters = 10):
     s1 = sim_rank(g1, c, max_iters)
     s2 = sim_rank(g2, c, max_iters)
 
-    dist = root_ed(s1, s2)
+    dist = matrix_ed(s1, s2)
 
     return dist
 

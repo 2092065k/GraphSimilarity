@@ -3,9 +3,9 @@ import time
 import numpy as np
 
 from graphSimilarity.utils import *
-from graphSimilarity.graph import Graph
-from graphSimilarity.kernel_methods import rbf_kernel
+from graphSimilarity.kernel_methods import *
 from graphSimilarity.distance_functions import *
+from graphSimilarity.graph import Graph
 from graphSimilarity.kernel_kmeans import kernel_kmeans, get_kernel_wcss
 from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss, get_sd_labels
 from graphSimilarity.kmeans_init import get_random_centroids, kmeans_pp
