@@ -319,13 +319,13 @@ for graph in graphs:
 # labels = [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1]
 
 # dist_matrix = __get_distance_matrix(graphs, graph_edit_distance)
-# print silhouette_score(dist_matrix, labels, metric=matrix_ed)
+# print silhouette_score(dist_matrix, labels, metric="precomputed")
 
 # matrices = load_matrix_data("/home/aquila/CS/L5P/formatConversion/outDir/data.txt", 11)
 # matrices = load_deep_walk_files("/home/aquila/CS/L5P/formatConversion2/outDir", 10)
 
 # dist_matrix = __get_distance_matrix(matrices, matrix_ed)
-# print silhouette_score(dist_matrix, labels, metric=matrix_ed)
+# print silhouette_score(dist_matrix, labels, metric="precomputed")
 
 #---------------------------------------------------------------------------------------------
 
