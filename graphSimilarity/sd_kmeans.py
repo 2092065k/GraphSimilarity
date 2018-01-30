@@ -2,26 +2,6 @@ import numpy as np
 from kmeans_init import get_random_centroids, kmeans_pp
 
 
-def __get_distance_matrix(items, dist_func):
-
-    distance_matrix = np.zeros((len(items), len(items)))
-
-    j = 0
-    for i in range(len(items)):
-
-        while j < len(items):
-
-            distance = dist_func(items[i], items[j])
-            distance_matrix[i, j] = distance
-            distance_matrix[j, i] = distance
-
-            j += 1
-
-        j = i + 1
-
-    return distance_matrix
-
-
 def __compute_cluster_assignment(centroid_indices, items, distance_matrix):
 
     labels = {}
@@ -75,12 +55,32 @@ def __compute_new_cluster_centroids(labels, items, distance_matrix):
     return new_centroid_indices
 
 
+def get_distance_matrix(items, dist_func):
+
+    distance_matrix = np.zeros((len(items), len(items)))
+
+    j = 0
+    for i in range(len(items)):
+
+        while j < len(items):
+
+            distance = dist_func(items[i], items[j])
+            distance_matrix[i, j] = distance
+            distance_matrix[j, i] = distance
+
+            j += 1
+
+        j = i + 1
+
+    return distance_matrix
+
+
 def sd_kmeans(k, max_iters, seed, items, dist_func, init = "random"):
 
     num_iters = 0
     converged = False
 
-    distance_matrix = __get_distance_matrix(items, dist_func)
+    distance_matrix = get_distance_matrix(items, dist_func)
 
     # select k distinct items as the cluster centers
     if init == "random":

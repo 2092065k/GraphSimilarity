@@ -10,10 +10,10 @@ from graphSimilarity.kernel_kmeans import kernel_kmeans, get_kernel_wcss
 from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss, get_sd_labels
 from graphSimilarity.kmeans_init import get_random_centroids, kmeans_pp
 
-from graphSimilarity.kernel_kmeans import __get_kernel_matrix
+from graphSimilarity.kernel_kmeans import get_kernel_matrix
 from sklearn.cluster import SpectralClustering
 
-from graphSimilarity.sd_kmeans import __get_distance_matrix
+from graphSimilarity.sd_kmeans import get_distance_matrix
 from sklearn.metrics import silhouette_samples, silhouette_score
 
 from graphSimilarity.graph_generator import generate_graphs_file
@@ -186,7 +186,7 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# kernel_matrix = __get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
+# kernel_matrix = get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
 
 # spectral_kmeans = SpectralClustering(n_clusters=2, random_state=0, n_init=1, affinity='precomputed').fit(kernel_matrix)
 
@@ -194,7 +194,7 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# kernel_matrix = __get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
+# kernel_matrix = get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
 
 # res = []
 # for seed in range(1000):
@@ -217,7 +217,7 @@ for graph in graphs:
 
 # start = time.time()
 
-# kernel_matrix = __get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
+# kernel_matrix = get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
 
 # for seed in range(200):
 #     SpectralClustering(n_clusters=2, random_state=seed, n_init=1, affinity='precomputed').fit(kernel_matrix)
@@ -318,13 +318,13 @@ for graph in graphs:
 
 # labels = [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1]
 
-# dist_matrix = __get_distance_matrix(graphs, graph_edit_distance)
+# dist_matrix = get_distance_matrix(graphs, graph_edit_distance)
 # print silhouette_score(dist_matrix, labels, metric="precomputed")
 
 # matrices = load_matrix_data("/home/aquila/CS/L5P/formatConversion/outDir/data.txt", 11)
 # matrices = load_deep_walk_files("/home/aquila/CS/L5P/formatConversion2/outDir", 10)
 
-# dist_matrix = __get_distance_matrix(matrices, matrix_ed)
+# dist_matrix = get_distance_matrix(matrices, matrix_ed)
 # print silhouette_score(dist_matrix, labels, metric="precomputed")
 
 #---------------------------------------------------------------------------------------------
