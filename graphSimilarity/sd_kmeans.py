@@ -75,12 +75,14 @@ def get_distance_matrix(items, dist_func):
     return distance_matrix
 
 
-def sd_kmeans(k, max_iters, seed, items, dist_func, init = "random"):
+def sd_kmeans(k, max_iters, seed, items, dist_func, init = "random", distance_matrix = None):
 
     num_iters = 0
     converged = False
 
-    distance_matrix = get_distance_matrix(items, dist_func)
+    # compute the distance matrix if one is not provided
+    if distance_matrix is None:
+        distance_matrix = get_distance_matrix(items, dist_func)
 
     # select k distinct items as the cluster centers
     if init == "random":

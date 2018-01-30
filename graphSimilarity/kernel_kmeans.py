@@ -96,13 +96,14 @@ def get_kernel_matrix(items, dist_func, kernel):
     return kernel_matrix
 
 
-def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random"):
+def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random", kernel_matrix = None):
 
     num_iters = 0
     converged = False
 
-    # compute kernel matrix
-    kernel_matrix = get_kernel_matrix(items, dist_func, kernel)
+    # compute the kernel matrix if one is not provided
+    if kernel_matrix is None:
+        kernel_matrix = get_kernel_matrix(items, dist_func, kernel)
 
     # initial assignment of cluster membership
     if init == "random":
@@ -147,10 +148,13 @@ def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random")
     return labels
 
 
-def get_kernel_wcss(k, items, labels, dist_func, kernel):
+def get_kernel_wcss(k, items, labels, dist_func, kernel, kernel_matrix = None):
 
     wcss = 0
-    kernel_matrix = get_kernel_matrix(items, dist_func, kernel)
+
+    if kernel_matrix is None:
+        kernel_matrix = get_kernel_matrix(items, dist_func, kernel)
+
     item_indices_per_cluster = __get_item_indices_per_cluster(k, labels)
 
     for i in range(len(items)):
