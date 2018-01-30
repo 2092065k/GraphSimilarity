@@ -20,13 +20,7 @@ def graph_edit_distance(g1, g2):
 
 def root_ed(s1, s2):
 
-    ed = 0
-
-    for i in range(s1.shape[0]):
-        for j in range(s1.shape[1]):
-            ed += (np.sqrt(s1[i,j]) - np.sqrt(s2[i,j])) ** 2
-
-    root_ed = np.sqrt(ed)
+    root_ed = np.sqrt(sum(sum((np.sqrt(s1) - np.sqrt(s2)) ** 2)))
 
     return root_ed
 
