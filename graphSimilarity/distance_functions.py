@@ -25,20 +25,22 @@ def root_ed(s1, s2):
     return root_ed
 
 
-def fabp(g, e = 0.2):
+def fabp(g):
 
     adj = g.get_adjacency_matrix()
     diag = g.get_diagonal_matrix()
     identity = np.identity(adj.shape[0])
+    
+    e = 1/(1 + diag.max())
     s = np.linalg.inv(identity + (e ** 2) * diag - e * adj)
     
     return s
 
 
-def delta_con(g1, g2, e = 0.2):
+def delta_con(g1, g2):
 
-    s1 = fabp(g1, e)
-    s2 = fabp(g2, e)
+    s1 = fabp(g1)
+    s2 = fabp(g2)
 
     dist = root_ed(s1, s2)
 

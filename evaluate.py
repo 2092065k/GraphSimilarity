@@ -22,7 +22,7 @@ for graph in graphs:
     graph.compute_adjacency_matrix()
     graph.compute_diagonal_matrix()
 
-print "Input data is loaded"
+print "Input data loaded"
 
 
 
