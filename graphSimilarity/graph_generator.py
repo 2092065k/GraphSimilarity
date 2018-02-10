@@ -16,7 +16,7 @@ def __get_edge_weight(weighted, weight_range):
     if not weighted:
         weight = 1
     else:
-        weight = np.random.randint(weight_range[0], clique_range[1] + 1)
+        weight = np.random.randint(weight_range[0], weight_range[1] + 1)
 
     return weight
 
@@ -49,7 +49,7 @@ def __generate_edges(num_of_nodes, clique_range, weighted, weight_range, directe
                 # if the edge is from one of the sparse regions possibly reject it
                 for region in sparse_regions:
                     if edge[0] in range(region[0], region[1]) and edge[1] in range(region[0], region[1]):
-                        if np.random.random() < 0.85:
+                        if np.random.random() < 0.80:
                             edge = [0, 0]
                             break
 
@@ -69,7 +69,7 @@ def __generate_edges(num_of_nodes, clique_range, weighted, weight_range, directe
     return edges
 
 
-def generate_graphs_file(file_name, num_of_graphs, num_of_nodes, seed,
+def generate_graphs_file(file_name, num_of_graphs, num_of_nodes, seed = 0.0,
                          clique_range = [30, 60], weighted = False, weight_range = [1, 10],
                          directed = False, dense_regions = [], sparse_regions = []):
     

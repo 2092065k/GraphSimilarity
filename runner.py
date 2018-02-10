@@ -224,11 +224,6 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# generate_graphs_file("test.txt", 4, 10, 0)
-# draw_all_graphs("test.txt")
-
-#---------------------------------------------------------------------------------------------
-
 # create_basic_edgelist_files(graphs, "/home/aquila/CS/L5P/formatConversion/graphDir", common_node = True)
 
 #---------------------------------------------------------------------------------------------
@@ -328,3 +323,8 @@ for graph in graphs:
 
 # print sim_rank(graphs[0], 0.8, 10)
 # print sim_rank_distance(graphs[0], graphs[1])
+
+#---------------------------------------------------------------------------------------------
+
+# generate_graphs_file("test.txt", 4, 10, dense_regions = [[0,5]], sparse_regions = [[5,10]], clique_range = [19, 20])
+# draw_all_graphs("test.txt")
