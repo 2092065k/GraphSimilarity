@@ -34,7 +34,7 @@ def __generate_edges(num_of_nodes, clique_range, weighted, weight_range, directe
         while not approved:
 
             # generate an edge in one of the dense regions
-            if len(dense_regions) > 0 and np.random.random() < 0.40:
+            if len(dense_regions) > 0 and np.random.random() < 0.50:
                 region = dense_regions[np.random.randint(0, len(dense_regions))]
                 node1 = np.random.randint(region[0], region[1])
                 node2 = np.random.randint(region[0], region[1])
@@ -69,7 +69,7 @@ def __generate_edges(num_of_nodes, clique_range, weighted, weight_range, directe
     return edges
 
 
-def generate_graphs_file(file_name, num_of_graphs, num_of_nodes, seed = 0.0,
+def generate_graphs_file(file_name, num_of_graphs, num_of_nodes, seed = 0,
                          clique_range = [30, 60], weighted = False, weight_range = [1, 10],
                          directed = False, dense_regions = [], sparse_regions = []):
     

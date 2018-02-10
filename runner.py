@@ -326,5 +326,5 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# generate_graphs_file("test.txt", 4, 10, dense_regions = [[0,5]], sparse_regions = [[5,10]], clique_range = [19, 20])
+# generate_graphs_file("test.txt", 100, 20, dense_regions = [[0,5]], sparse_regions = [[5,20]], clique_range = [19, 20])
 # draw_all_graphs("test.txt")
