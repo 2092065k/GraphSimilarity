@@ -224,11 +224,11 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# create_basic_edgelist_files(graphs, "/home/aquila/CS/L5P/formatConversion/graphDir", common_node = True)
+# create_basic_edgelist_files(graphs, "/home/aquila/CS/L5P/FC/formatConversion/graphDir", common_node = True)
 
 #---------------------------------------------------------------------------------------------
 
-# matrices = load_matrix_data("/home/aquila/CS/L5P/formatConversion/outDir/data.txt", 11)
+# matrices = load_matrix_data("/home/aquila/CS/L5P/FC/formatConversion/outDir/data.txt", 11)
 # print matrix_ed(matrices[16], matrices[15])
 
 #---------------------------------------------------------------------------------------------
@@ -246,7 +246,7 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# matrices = load_matrix_data("/home/aquila/CS/L5P/formatConversion/outDir/data.txt", 11)
+# matrices = load_matrix_data("/home/aquila/CS/L5P/FC/formatConversion/outDir/data.txt", 11)
 
 # res = []
 # for seed in range(200):
@@ -266,16 +266,16 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# create_basic_adjacency_files(graphs, "/home/aquila/CS/L5P/formatConversion2/graphDir")
+# create_basic_adjacency_files(graphs, "/home/aquila/CS/L5P/FC/formatConversion2/graphDir")
 
 #---------------------------------------------------------------------------------------------
 
-# matrices = load_deep_walk_files("/home/aquila/CS/L5P/formatConversion2/outDir", 10)
+# matrices = load_deep_walk_files("/home/aquila/CS/L5P/FC/formatConversion2/outDir", 10)
 # print matrix_ed(matrices[1], matrices[15])
 
 #---------------------------------------------------------------------------------------------
 
-# matrices = load_deep_walk_files("/home/aquila/CS/L5P/formatConversion2/outDir", 10)
+# matrices = load_deep_walk_files("/home/aquila/CS/L5P/FC/formatConversion2/outDir", 10)
 
 # labels = kernel_kmeans(2, 50, 0, matrices, matrix_ed, rbf_kernel)
 # print labels
@@ -288,7 +288,7 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
-# matrices = load_deep_walk_files("/home/aquila/CS/L5P/formatConversion2/outDir", 10)
+# matrices = load_deep_walk_files("/home/aquila/CS/L5P/FC/formatConversion2/outDir", 10)
 
 # res = []
 # for seed in range(200):
@@ -313,8 +313,8 @@ for graph in graphs:
 # dist_matrix = get_distance_matrix(graphs, graph_edit_distance)
 # print silhouette_score(dist_matrix, labels, metric="precomputed")
 
-# matrices = load_matrix_data("/home/aquila/CS/L5P/formatConversion/outDir/data.txt", 11)
-# matrices = load_deep_walk_files("/home/aquila/CS/L5P/formatConversion2/outDir", 10)
+# matrices = load_matrix_data("/home/aquila/CS/L5P/FC/formatConversion/outDir/data.txt", 11)
+# matrices = load_deep_walk_files("/home/aquila/CS/L5P/FC/formatConversion2/outDir", 10)
 
 # dist_matrix = get_distance_matrix(matrices, matrix_ed)
 # print silhouette_score(dist_matrix, labels, metric="precomputed")
