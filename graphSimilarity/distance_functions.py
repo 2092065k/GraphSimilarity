@@ -53,13 +53,13 @@ def sim_rank(g, c = 0.8, max_iters = 10):
     adj = g.get_adjacency_matrix()
     col_degree = adj.sum(axis = 0)
     col_degree = [x if x != 0 else 1 for x in col_degree]
-    col_norm_adj = np.matrix(adj / col_degree)
+    col_norm_adj = adj / col_degree
 
     s = np.identity(adj.shape[0])
     
     for i in range(max_iters):
 
-        s = c * (col_norm_adj.T * s * col_norm_adj)
+        s = c * np.dot(np.dot(col_norm_adj.T, s), col_norm_adj)
         np.fill_diagonal(s, np.ones(adj.shape[0]))
 
     return s
