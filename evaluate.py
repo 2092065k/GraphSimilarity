@@ -69,3 +69,9 @@ print "Kernel matrix computed"
 # 	if k > 1:
 # 		labels = get_sd_labels(centroids, graphs, graph_edit_distance)
 # 		print str(k) + " " + str(silhouette_score(distance_matrix, labels, metric="precomputed"))
+
+
+#---------------------------------------------------------------------------------------------
+
+# labels = [x/100 for x in range(400)]
+# print silhouette_score(distance_matrix, labels, metric="precomputed")
