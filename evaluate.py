@@ -22,7 +22,7 @@ for graph in graphs:
     graph.compute_adjacency_matrix()
     graph.compute_diagonal_matrix()
 
-# graphs = load_matrix_data("/home/aquila/CS/L5P/FC/formatConversion3/outDir/data.txt", 21)
+# graphs = [g[1:] for g in load_matrix_data("/home/aquila/CS/L5P/FC/formatConversion8/outDir/data.txt", 21)]
 # graphs = load_deep_walk_files("/home/aquila/CS/L5P/FC/formatConversion4/outDir", 20)
 
 print "Input data loaded"
