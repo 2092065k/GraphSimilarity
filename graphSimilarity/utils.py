@@ -54,6 +54,13 @@ def draw_all_graphs(file):
     draw_graph(num_nodes, edges)
 
 
+def draw_matrix_heat_map(matrix, color="hot"):
+    'Draw a heat map of a matrix'
+
+    plt.imshow(matrix, cmap=color, interpolation='nearest')
+    plt.show()
+
+
 def load_data(file):
     'Parse a graph data file'
 

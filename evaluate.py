@@ -75,3 +75,7 @@ print "Kernel matrix computed"
 
 # labels = [x/100 for x in range(400)]
 # print silhouette_score(distance_matrix, labels, metric="precomputed")
+
+#---------------------------------------------------------------------------------------------
+
+# draw_matrix_heat_map(distance_matrix)
