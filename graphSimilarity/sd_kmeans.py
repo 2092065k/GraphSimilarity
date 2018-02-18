@@ -106,18 +106,23 @@ def sd_kmeans(k, max_iters, seed, items, dist_func, init = "random", distance_ma
     return centroid_indices
 
 
-def get_sd_labels(centroid_indices, items, dist_func):
+def get_sd_labels(centroid_indices, items, dist_func, distance_matrix = None):
 
     labels = []
 
-    for item in items:
+    for item_index in range(len(items)):
         
         min_distance = float("inf")
         label = -1
 
+        # the distance matrix is not computed here as n*n >> n*k
         for index in range(len(centroid_indices)):
 
-            dist = dist_func(items[centroid_indices[index]], item)
+            # compute or look up the distance
+            if distance_matrix is None:
+                dist = dist_func(items[centroid_indices[index]], items[item_index])
+            else:
+                dist = distance_matrix[centroid_indices[index], item_index]
 
             if dist < min_distance:
                 min_distance = dist
@@ -128,14 +133,20 @@ def get_sd_labels(centroid_indices, items, dist_func):
     return labels
 
 
-def get_sd_wcss(centroid_indices, items, dist_func):
+def get_sd_wcss(centroid_indices, items, dist_func, distance_matrix = None):
 
     wcss = 0
-    labels = get_sd_labels(centroid_indices, items, dist_func)
+    labels = get_sd_labels(centroid_indices, items, dist_func, distance_matrix)
 
     for item_index in range(len(labels)):
         centroid_index = centroid_indices[labels[item_index]]
-        squared_dist = dist_func(items[item_index], items[centroid_index])  ** 2
-        wcss += squared_dist
+
+        # compute or look up the distance
+        if distance_matrix is None:
+            dist = dist_func(items[item_index], items[centroid_index])
+        else:
+            dist = distance_matrix[item_index, centroid_index]
+
+        wcss += (dist ** 2)
 
     return wcss

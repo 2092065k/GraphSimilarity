@@ -63,11 +63,11 @@ print "Kernel matrix computed"
 
 # for k in range(1, 10):
 # 	centroids = sd_kmeans(k, 50, 0, graphs, graph_edit_distance, distance_matrix = distance_matrix)
-# 	sd_wcss = get_sd_wcss(centroids, graphs, graph_edit_distance)
+# 	sd_wcss = get_sd_wcss(centroids, graphs, graph_edit_distance, distance_matrix = distance_matrix)
 # 	print str(k) + " " + str(sd_wcss)
 
 # 	if k > 1:
-# 		labels = get_sd_labels(centroids, graphs, graph_edit_distance)
+# 		labels = get_sd_labels(centroids, graphs, graph_edit_distance, distance_matrix = distance_matrix)
 # 		print str(k) + " " + str(silhouette_score(distance_matrix, labels, metric="precomputed"))
 
 
