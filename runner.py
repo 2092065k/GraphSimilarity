@@ -7,6 +7,7 @@ from graphSimilarity.kernel_methods import *
 from graphSimilarity.distance_functions import *
 from graphSimilarity.graph import Graph
 from graphSimilarity.graph_generator import generate_graphs_file
+from graphSimilarity.graph_generator_2 import generate_graphs_file_2
 from graphSimilarity.kernel_kmeans import kernel_kmeans, get_kernel_wcss, get_kernel_matrix
 from graphSimilarity.sd_kmeans import sd_kmeans, get_sd_wcss, get_sd_labels, get_distance_matrix
 from graphSimilarity.kmeans_init import get_random_centroids, kmeans_pp
@@ -327,4 +328,9 @@ for graph in graphs:
 #---------------------------------------------------------------------------------------------
 
 # generate_graphs_file("test.txt", 100, 20, dense_regions = [[0,5]], sparse_regions = [[5,20]], clique_range = [19, 20])
+# draw_all_graphs("test.txt")
+
+#---------------------------------------------------------------------------------------------
+
+# generate_graphs_file_2("test.txt", 4, 10, regions = [[0, 5, 0.8], [5, 10, 0.2]], region_con = 0.2)
 # draw_all_graphs("test.txt")
