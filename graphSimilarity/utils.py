@@ -61,6 +61,20 @@ def draw_matrix_heat_map(matrix, color="hot"):
     plt.show()
 
 
+def add_matrix_noise(matrix, percentage):
+    'Append noise to the end of an n*n matrix representing n*percentage elements'
+
+    dim_1 = int(round(percentage * matrix.shape[0]))
+    dim_2 = matrix.shape[0] + dim_1
+
+    noise = np.random.random((dim_1, dim_2)) * matrix.max()
+
+    phase1 = np.vstack((matrix, noise[:, 0:matrix.shape[0]]))
+    phase2 = np.hstack((phase1, noise.T))
+
+    return phase2
+
+
 def load_data(file):
     'Parse a graph data file'
 

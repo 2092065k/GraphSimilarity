@@ -78,4 +78,5 @@ print "Kernel matrix computed"
 
 #---------------------------------------------------------------------------------------------
 
+# distance_matrix = add_matrix_noise(distance_matrix, 0.1)
 # draw_matrix_heat_map(distance_matrix)
