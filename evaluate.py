@@ -18,6 +18,9 @@ from sklearn.metrics import silhouette_samples, silhouette_score
 
 graphs = load_data(sys.argv[1])
 
+# noise = load_data(sys.argv[2])
+# graphs += noise
+
 for graph in graphs:
     graph.compute_adjacency_matrix()
     graph.compute_diagonal_matrix()
@@ -78,5 +81,4 @@ print "Kernel matrix computed"
 
 #---------------------------------------------------------------------------------------------
 
-# distance_matrix = add_matrix_noise(distance_matrix, 0.1)
 # draw_matrix_heat_map(distance_matrix)
