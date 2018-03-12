@@ -33,7 +33,66 @@ def __get_edge_weight(weighted, weight_range):
     return weight
 
 
-def __generate_edges(num_of_nodes, weighted, weight_range, directed, regions, region_con):
+def generate_edge_between_regions(edges, directed, region_0, region_1):
+    'Create a single edge between the two regions'
+
+    approved = False
+
+    while not approved:
+
+        node1 = np.random.randint(region_0[0], region_0[1])
+        node2 = np.random.randint(region_1[0], region_1[1])
+        
+        if not directed:
+            edge = [node1, node2]
+            edge.sort()
+        else:
+            # randomly choose the source/destination region
+            if np.random.random() > 0.5:
+                edge = [node1, node2]
+            else:
+                edge = [node2, node1]
+
+        if edge not in edges:
+            edges.append(edge)
+            approved = True
+
+
+def __generate_uniform_cross_region_edges(edges, directed, region_con, regions):
+    'Create an equal number of edges joining all region pairs'
+
+    region_pairs = list(itertools.combinations(regions, 2))
+
+    for region_pair in region_pairs:
+
+        region_0 = region_pair[0]
+        region_1 = region_pair[1]
+
+        smaller_group_size = min(len(range(region_0[0], region_0[1])), len(range(region_1[0], region_1[1])))
+        num_edges_between_regions = int(round(smaller_group_size * region_con))
+
+        for e in range(num_edges_between_regions):
+            generate_edge_between_regions(edges, directed, region_0, region_1)
+
+
+
+
+def __generate_cross_region_edges(edges, directed, num_of_nodes, region_con, regions):
+    'Randomly create edges joining region pairs'
+
+    region_pairs = list(itertools.combinations(regions, 2))
+    avg_region_size = num_of_nodes / float(len(regions))
+    num_edges_between_regions = int(round(region_con * avg_region_size * len(region_pairs)))
+
+    for e in range(num_edges_between_regions):
+
+        region_pair = region_pairs[np.random.randint(0, len(region_pairs))]
+        generate_edge_between_regions(edges, directed, region_pair[0], region_pair[1])
+
+
+
+
+def __generate_edges(num_of_nodes, weighted, weight_range, directed, regions, region_con, uniform_region_con):
 
     edges = []
 
@@ -61,39 +120,11 @@ def __generate_edges(num_of_nodes, weighted, weight_range, directed, regions, re
 	                edges.append(edge)
 	                approved = True
 
-    # generate edges between each pair of regions
-    region_pairs = list(itertools.combinations(regions, 2))
-
-    for region_pair in region_pairs:
-
-        region_0 = region_pair[0]
-        region_1 = region_pair[1]
-
-        smaller_group_size = min(len(range(region_0[0], region_0[1])), len(range(region_1[0], region_1[1])))
-        num_edges_between_regions = int(round(smaller_group_size * region_con))
-
-        for e in range(num_edges_between_regions):
-
-            approved = False
-
-            while not approved:
-
-                node1 = np.random.randint(region_0[0], region_0[1])
-                node2 = np.random.randint(region_1[0], region_1[1])
-                
-                if not directed:
-                    edge = [node1, node2]
-                    edge.sort()
-                else:
-                    # randomly choose the source/destination region
-                    if np.random.random() > 0.5:
-                        edge = [node1, node2]
-                    else:
-                        edge = [node2, node1]
-
-                if edge not in edges:
-                    edges.append(edge)
-                    approved = True
+    # generate edges between different regions
+    if uniform_region_con:
+        __generate_uniform_cross_region_edges(edges, directed, region_con, regions)
+    else:
+        __generate_cross_region_edges(edges, directed, num_of_nodes, region_con, regions)
 
     # include a weight for each edge
     for edge in edges:
@@ -105,10 +136,10 @@ def __generate_edges(num_of_nodes, weighted, weight_range, directed, regions, re
 
 def generate_graphs_file_2(file_name, num_of_graphs, num_of_nodes, seed = 0,
                          weighted = False, weight_range = [1, 10], directed = False,
-                         regions = [], region_con = 0.1):
+                         regions = [], region_con = 0.1, uniform_region_con = True):
     
     if not __assert_all_nodes_in_regions(num_of_nodes, regions):
-        return "Some nodes are not part of a region or are included in multiple regions"
+        print("Some nodes are not part of a region or are included in multiple regions")
 
     np.random.seed(seed)
     file = open(file_name, 'w')
@@ -117,7 +148,8 @@ def generate_graphs_file_2(file_name, num_of_graphs, num_of_nodes, seed = 0,
 
         file.write(str(num_of_nodes) + '\n')
 
-        edges = __generate_edges(num_of_nodes, weighted, weight_range, directed, regions, region_con)
+        edges = __generate_edges(num_of_nodes, weighted, weight_range,
+                                directed, regions, region_con, uniform_region_con)
 
         for edge in edges:
             file.write(str(edge[0]) + ' ' + str(edge[1]) + ' ' + str(edge[2]) + '\n')
