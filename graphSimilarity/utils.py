@@ -1,5 +1,6 @@
 import os
 import sys
+import itertools
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -73,6 +74,22 @@ def add_matrix_noise(matrix, percentage):
     phase2 = np.hstack((phase1, noise.T))
 
     return phase2
+
+
+def get_random_permutations(vals, num_permutations, seed = 0):
+    'Get n permutations of the elements in vals'
+
+    np.random.seed(seed)
+    permutations = []
+    all_permutations = list(itertools.permutations(vals, len(vals)))
+
+    for index in range(num_permutations):
+
+        permutation =  all_permutations[np.random.randint(0, len(all_permutations))]
+        permutations.append(permutation)
+        all_permutations.remove(permutation)
+
+    return permutations
 
 
 def load_data(file):

@@ -334,3 +334,7 @@ for graph in graphs:
 
 # generate_graphs_file_2("test.txt", 4, 10, regions = [[0, 5, 0.8], [5, 10, 0.2]], region_con = 0.2)
 # draw_all_graphs("test.txt")
+
+#---------------------------------------------------------------------------------------------
+
+# print get_random_permutations([80, 60, 40, 20, 10], 5, seed = 50)
