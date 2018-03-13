@@ -73,6 +73,26 @@ def sim_rank_distance(g1, g2, c = 0.8, max_iters = 10):
 
     return dist
 
+# --- Node In/Out Degree Distance ---
+
+def node_degree_matrix(g):
+
+    adj = g1.get_adjacency_matrix()
+    in_deg = adj.sum(axis=1)
+    out_deg = adj.sum(axis=0)
+    s = np.vstack((in_deg, out_deg))
+
+    return s
+
+def degree_dist(g1, g2):
+
+    s1 = node_degree_matrix(g1)
+    s2 = node_degree_matrix(g2)
+
+    dist = matrix_ed(s1, s2)
+
+    return dist
+
 # --- Matrix Euclidean Distance ---
 
 def matrix_ed(m1, m2):
