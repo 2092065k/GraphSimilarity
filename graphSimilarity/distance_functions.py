@@ -128,22 +128,3 @@ def matrix_md(m1, m2):
         dist += sp.spatial.distance.cityblock(m1[i], m2[i])
 
     return dist
-
-# --- Matrix Frobenius Distance ---
-
-def frob_dist(m1, m2):
-
-    dist = np.linalg.norm(m1 - m2, ord='fro')
-
-    return dist
-
-# --- Matrix Eigenvector Euclidean Distance ---
-
-def matrix_eig_ed(m1, m2):
-
-    w1, v1 = np.linalg.eig(m1)
-    w2, v2 = np.linalg.eig(m2)
-
-    dist = matrix_ed(v1, v2)
-
-    return dist
