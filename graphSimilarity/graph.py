@@ -3,15 +3,22 @@ import numpy as np
 class Graph:
     'Simple class representing a graph'
 
-    def __init__(self, num_vertices, edges):
+    def __init__(self, num_vertices, edges, vertex_weights):
         self.num_vertices = num_vertices
         self.edges = edges
+        self.vertex_weights = np.ones(num_vertices)
+
+        for node_id in vertex_weights:
+            self.vertex_weights[node_id] = vertex_weights[node_id]
 
     def get_num_vertices(self):
         return self.num_vertices
 
     def get_edges(self):
         return self.edges
+
+    def get_vertex_weights(self):
+        return self.vertex_weights
 
     def compute_adjacency_matrix(self, directed = False):
         adjacency_matrix = np.zeros((self.num_vertices, self.num_vertices))

@@ -99,22 +99,30 @@ def load_data(file):
     file = open(file, 'r')
 
     edges = []
+    vertex_weights = {}
     num_nodes = int(file.readline())
 
     for line in file:
 
         line_elements = line.split()
 
+        # parse vertex weight line
+        if len(line_elements) == 2:
+            vertex_weights[int(line_elements[0])] = float(line_elements[1])
+
+        # parse edge line
         if len(line_elements) == 3:
             edge = map(lambda x: int(x), line_elements)
             edges.append(edge)
 
+        # parse number of vertices line
         elif len(line_elements) == 1:
-            graphs.append(Graph(num_nodes, edges))
+            graphs.append(Graph(num_nodes, edges, vertex_weights))
             edges = []
+            vertex_weights = {}
             num_nodes = int(line)
 
-    graphs.append(Graph(num_nodes, edges))
+    graphs.append(Graph(num_nodes, edges, {}))
     file.close()
 
     return graphs
