@@ -122,7 +122,7 @@ def load_data(file):
             vertex_weights = {}
             num_nodes = int(line)
 
-    graphs.append(Graph(num_nodes, edges, {}))
+    graphs.append(Graph(num_nodes, edges, vertex_weights))
     file.close()
 
     return graphs
