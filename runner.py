@@ -338,3 +338,23 @@ for graph in graphs:
 #---------------------------------------------------------------------------------------------
 
 # print get_random_permutations([80, 60, 40, 20, 10], 5, seed = 50)
+
+#---------------------------------------------------------------------------------------------
+
+# permu = get_random_permutations([80, 60, 40, 20, 10], 5, seed = 50)
+
+# for p in range(len(permu)):
+# 	perm = permu[p]
+# 	perm = [pe / 100.0 for pe in perm]
+# 	nwr = []
+# 	for pe in perm:
+# 		if pe < 0.3:
+# 			nwr.append([1,11])
+# 		elif pe > 0.3 and pe < 0.5:
+# 			nwr.append([5,16])
+# 		else:
+# 			nwr.append([10, 21])
+
+# 	generate_graphs_file_2("test" + str(p) + ".txt", 100, 50, seed = p,
+# 						regions = [[0, 10, perm[0]], [10, 20, perm[1]], [20, 30, perm[2]], [30, 40, perm[3]], [40, 50, perm[4]]],
+# 						region_con = 0.5, uniform_region_con = False, weighted_nodes = True, node_weight_ranges = nwr)
