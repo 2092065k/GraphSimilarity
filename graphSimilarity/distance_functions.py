@@ -128,3 +128,42 @@ def matrix_md(m1, m2):
         dist += sp.spatial.distance.cityblock(m1[i], m2[i])
 
     return dist
+
+# Graph Distance Algorithms Considering Node Weights
+
+# --- Graph Edit Distance With Node Weights ---
+
+def graph_edit_distance_nw(g1, g2):
+
+    m1 = g1.get_adjacency_matrix()
+    m2 = g2.get_adjacency_matrix()
+
+    nw1 = g1.get_vertex_weights()
+    nw2 = g2.get_vertex_weights()
+
+    ged_diff = sum(sum(abs(m1 - m2)))
+    nw_diff = sum(abs(nw1 - nw2))
+
+    return ged_diff + nw_diff
+
+# --- DeltaCon With Node Weights ---
+
+def fabp_nw(g, norm):
+
+    adj = g.get_adjacency_matrix()
+    diag = g.get_diagonal_matrix()
+    node_weights = g.get_vertex_weights()
+    identity = np.identity(adj.shape[0])
+    
+    e = 1/(1 + diag.max())
+    s = np.linalg.inv(identity + (e ** 2) * diag - e * adj)
+
+    nw_matrix = np.zeros(s.shape)
+    np.fill_diagonal(nw_matrix, node_weights)
+    s = np.dot(nw_matrix, s) / norm
+    
+    return s
+
+def get_largest_node_weight(graphs):
+
+    return max([graph.get_vertex_weights().max() for graph in graphs])
