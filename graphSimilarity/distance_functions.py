@@ -77,7 +77,7 @@ def sim_rank_distance(g1, g2, c = 0.8, max_iters = 10):
 
 def node_degree_matrix(g):
 
-    adj = g1.get_adjacency_matrix()
+    adj = g.get_adjacency_matrix()
     in_deg = adj.sum(axis=1)
     out_deg = adj.sum(axis=0)
     s = np.vstack((in_deg, out_deg))
@@ -167,3 +167,24 @@ def fabp_nw(g, norm):
 def get_largest_node_weight(graphs):
 
     return max([graph.get_vertex_weights().max() for graph in graphs])
+
+# --- Node In/Out Degree and Node Weigh Distance ---
+
+def node_degree_weight_matrix(g):
+
+    adj = g.get_adjacency_matrix()
+    nw = g.get_vertex_weights()
+    in_deg = adj.sum(axis=1)
+    out_deg = adj.sum(axis=0)
+    s = np.vstack((in_deg, out_deg, nw))
+
+    return s
+
+def degree_dist_nw(g1, g2):
+
+    s1 = node_degree_weight_matrix(g1)
+    s2 = node_degree_weight_matrix(g2)
+
+    dist = matrix_ed(s1, s2)
+
+    return dist
