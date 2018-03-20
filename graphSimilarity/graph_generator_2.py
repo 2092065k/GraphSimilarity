@@ -23,17 +23,17 @@ def __get_num_of_edge_in_region(num_of_nodes, percentage):
     return num_of_edges
 
 
-def __get_edge_weight(weighted, weight_range):
+def __generate_edge_weight(weighted_edges, edge_weight_range):
 
-    if not weighted:
+    if not weighted_edges:
         weight = 1
     else:
-        weight = np.random.randint(weight_range[0], weight_range[1] + 1)
+        weight = np.random.randint(edge_weight_range[0], edge_weight_range[1] + 1)
 
     return weight
 
 
-def generate_edge_between_regions(edges, directed, region_0, region_1):
+def __generate_edge_between_regions(edges, directed, region_0, region_1):
     'Create a single edge between the two regions'
 
     approved = False
@@ -72,7 +72,7 @@ def __generate_uniform_cross_region_edges(edges, directed, region_con, regions):
         num_edges_between_regions = int(round(smaller_group_size * region_con))
 
         for e in range(num_edges_between_regions):
-            generate_edge_between_regions(edges, directed, region_0, region_1)
+            __generate_edge_between_regions(edges, directed, region_0, region_1)
 
 
 
@@ -87,12 +87,12 @@ def __generate_cross_region_edges(edges, directed, num_of_nodes, region_con, reg
     for e in range(num_edges_between_regions):
 
         region_pair = region_pairs[np.random.randint(0, len(region_pairs))]
-        generate_edge_between_regions(edges, directed, region_pair[0], region_pair[1])
+        __generate_edge_between_regions(edges, directed, region_pair[0], region_pair[1])
 
 
 
 
-def __generate_edges(num_of_nodes, weighted, weight_range, directed, regions, region_con, uniform_region_con):
+def __generate_edges(num_of_nodes, weighted_edges, edge_weight_range, directed, regions, region_con, uniform_region_con):
 
     edges = []
 
@@ -128,27 +128,60 @@ def __generate_edges(num_of_nodes, weighted, weight_range, directed, regions, re
 
     # include a weight for each edge
     for edge in edges:
-        weight = __get_edge_weight(weighted, weight_range)
+        weight = __generate_edge_weight(weighted_edges, edge_weight_range)
         edge.append(weight)
 
     return edges
 
 
+def __generate_node_weights(regions, node_weight_ranges):
+
+    node_weights = []
+    node_ids_in_regions = [range(region[0], region[1]) for region in regions]
+
+    for region_id in range(len(regions)):
+
+        node_ids_in_region = node_ids_in_regions[region_id]
+        node_weight_range = node_weight_ranges[region_id]
+
+        for node_id in node_ids_in_region:
+
+            node_weight = (node_weight_range[1] - node_weight_range[0]) * np.random.random() + node_weight_range[0]
+            node_weights.append([node_id, node_weight])
+
+    return node_weights
+
+
 def generate_graphs_file_2(file_name, num_of_graphs, num_of_nodes, seed = 0,
-                         weighted = False, weight_range = [1, 10], directed = False,
-                         regions = [], region_con = 0.1, uniform_region_con = True):
+                         weighted_edges = False, edge_weight_range = [1, 10], directed = False,
+                         regions = [], region_con = 0.1, uniform_region_con = True,
+                         weighted_nodes = False, node_weight_ranges = []):
     
+    # assert that the input parameters provide consistent information
     if not __assert_all_nodes_in_regions(num_of_nodes, regions):
         print("Some nodes are not part of a region or are included in multiple regions")
+        return
+
+    if weighted_nodes and len(regions) != len(node_weight_ranges):
+        print("The number of node regions and node weight ranges do not match")
+        return
 
     np.random.seed(seed)
     file = open(file_name, 'w')
 
+    # for each graph write out - number of nodes, node weights, edges
     for graph in range(num_of_graphs):
 
+        # write out the number of nodes in the graph - also indicates the start of a new graph
         file.write(str(num_of_nodes) + '\n')
 
-        edges = __generate_edges(num_of_nodes, weighted, weight_range,
+        # write out all node weights
+        if weighted_nodes:
+            for node_weight in __generate_node_weights(regions, node_weight_ranges):
+                file.write(str(node_weight[0]) + ' ' + str(node_weight[1]) + '\n')
+
+        # write out all edges in the graph
+        edges = __generate_edges(num_of_nodes, weighted_edges, edge_weight_range,
                                 directed, regions, region_con, uniform_region_con)
 
         for edge in edges:
