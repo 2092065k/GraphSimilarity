@@ -11,8 +11,10 @@ def __get_num_of_edges(num_of_nodes, clique_range):
     return num_of_edges
 
 
-def __get_edge_weight(weighted, weight_range):
+def __generate_edge_weight(weighted, weight_range):
+    'Generate an edge weight'
 
+    # if the edge is unweighted assign a weight of one, otherwise assign a random weight in the given range
     if not weighted:
         weight = 1
     else:
@@ -22,8 +24,8 @@ def __get_edge_weight(weighted, weight_range):
 
 
 def __generate_edges(num_of_nodes, clique_range, weighted, weight_range, directed, dense_regions, sparse_regions):
+    'Generate all edges for a given graph'
 
-    #add the weights at the end
     num_of_edges =  __get_num_of_edges(num_of_nodes, clique_range)
     edges = []
 
@@ -63,7 +65,7 @@ def __generate_edges(num_of_nodes, clique_range, weighted, weight_range, directe
 
     # include a weight for each edge
     for edge in edges:
-        weight = __get_edge_weight(weighted, weight_range)
+        weight = __generate_edge_weight(weighted, weight_range)
         edge.append(weight)
 
     return edges
@@ -72,6 +74,8 @@ def __generate_edges(num_of_nodes, clique_range, weighted, weight_range, directe
 def generate_graphs_file(file_name, num_of_graphs, num_of_nodes, seed = 0,
                          clique_range = [30, 60], weighted = False, weight_range = [1, 10],
                          directed = False, dense_regions = [], sparse_regions = []):
+
+    'Generate a collection of graphs with a set of dense and sparse regions'
     
     np.random.seed(seed)
     file = open(file_name, 'w')

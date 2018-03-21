@@ -24,7 +24,9 @@ def __get_num_of_edge_in_region(num_of_nodes, percentage):
 
 
 def __generate_edge_weight(weighted_edges, edge_weight_range):
+    'Generate an edge weight'
 
+    # if the edge is unweighted assign a weight of one, otherwise assign a random weight in the given range
     if not weighted_edges:
         weight = 1
     else:
@@ -93,6 +95,7 @@ def __generate_cross_region_edges(edges, directed, num_of_nodes, region_con, reg
 
 
 def __generate_edges(num_of_nodes, weighted_edges, edge_weight_range, directed, regions, region_con, uniform_region_con):
+    'Generate all edges for a given graph'
 
     edges = []
 
@@ -135,6 +138,7 @@ def __generate_edges(num_of_nodes, weighted_edges, edge_weight_range, directed, 
 
 
 def __generate_node_weights(regions, node_weight_ranges):
+    'For each node, produce a weight in the specified weight range for its region'
 
     node_weights = []
     node_ids_in_regions = [range(region[0], region[1]) for region in regions]
@@ -156,6 +160,8 @@ def generate_graphs_file_2(file_name, num_of_graphs, num_of_nodes, seed = 0,
                          weighted_edges = False, edge_weight_range = [1, 10], directed = False,
                          regions = [], region_con = 0.1, uniform_region_con = True,
                          weighted_nodes = False, node_weight_ranges = []):
+
+    'Generate a collection of graphs with a set of regions with variable connectivity'
     
     # assert that the input parameters provide consistent information
     if not __assert_all_nodes_in_regions(num_of_nodes, regions):
