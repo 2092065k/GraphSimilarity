@@ -47,5 +47,3 @@ class Graph:
         diagonal_matrix = np.zeros(self.adjacency_matrix.shape)
         np.fill_diagonal(diagonal_matrix, self.adjacency_matrix.sum(axis=1))
         self.diagonal_matrix = diagonal_matrix
-
-    
