@@ -3,6 +3,7 @@ from kmeans_init import get_random_centroids, kmeans_pp
 
 
 def __compute_cluster_assignment(centroid_indices, items, distance_matrix):
+    'Get a dictionary with cluster ids as keys and arrays of assinged item indices as values'
 
     labels = {}
 
@@ -28,6 +29,7 @@ def __compute_cluster_assignment(centroid_indices, items, distance_matrix):
 
 
 def __compute_new_cluster_centroids(labels, items, distance_matrix):
+    'The new centroids are the items with minimum average distance to all other items in their cluster'
 
     new_centroid_indices = []
 
@@ -56,6 +58,7 @@ def __compute_new_cluster_centroids(labels, items, distance_matrix):
 
 
 def get_distance_matrix(items, dist_func):
+    'Compute the NxN matrix of distances between all pairs of items'
 
     distance_matrix = np.zeros((len(items), len(items)))
 
@@ -76,6 +79,41 @@ def get_distance_matrix(items, dist_func):
 
 
 def sd_kmeans(k, max_iters, seed, items, dist_func, init = "random", distance_matrix = None):
+    """Run Structured Data K-Means
+
+    Parameters
+    ----------
+    k: int
+        the number of clusters
+
+    max_iters: int
+        the number of maximum allowed itterations before the method terminates
+        (termination will occure earlier if the chosen centroids converge)
+
+    seed: int
+        a seed paramether for controlling randomness
+
+    items: 1-D list
+        the list of structured data items thet will be clustered
+
+    dist_func: function pointer
+        a function for computing the distance between any two items in the items list
+
+    init: string
+        a string indicating the centroid initialization method
+
+    distance_matrix: 2-D numpy array
+        an optional pre-computed NxN matrix of distance values between all pairs of items
+
+    The possible initialization methods are: 'random' and 'kpp':
+        random - randomly choose centroids amongst the input items
+        kpp    - use k-means++ to choose centroids amongst the input items
+
+    Return
+    ------
+    labels: 1-D list of ints
+        the indices of the input items which best approximate the centroids
+    """
 
     num_iters = 0
     converged = False
@@ -107,6 +145,7 @@ def sd_kmeans(k, max_iters, seed, items, dist_func, init = "random", distance_ma
 
 
 def get_sd_labels(centroid_indices, items, dist_func, distance_matrix = None):
+    'Compute the assigned cluster label for each item given the indices of the approximate centroids'
 
     labels = []
 
@@ -134,6 +173,7 @@ def get_sd_labels(centroid_indices, items, dist_func, distance_matrix = None):
 
 
 def get_sd_wcss(centroid_indices, items, dist_func, distance_matrix = None):
+    'Compute the within-cluster sum of squares value for a set of approximate centroids'
 
     wcss = 0
     labels = get_sd_labels(centroid_indices, items, dist_func, distance_matrix)

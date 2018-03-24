@@ -161,7 +161,47 @@ def generate_graphs_file_2(file_name, num_of_graphs, num_of_nodes, seed = 0,
                          regions = [], region_con = 0.1, uniform_region_con = True,
                          weighted_nodes = False, node_weight_ranges = []):
 
-    'Generate a collection of graphs with a set of regions with variable connectivity'
+    """Generate a collection of graphs with a set of regions with variable connectivity
+
+    Parameters
+    ----------
+    file_name: string
+        name of the generated graphs file
+
+    num_of_graphs: int
+        the nuber of graphs that will be generated and written into the file
+
+    num_of_nodes: int
+        the number of nodes that every graph will have
+
+    seed: int
+        a seed paramether for controlling randomness
+
+    weighted_edges: boolean
+        determines if the edges will be weighted or not
+
+    edge_weight_range: [lwb: int, upb: int]
+        the weight of each edge will be a random integer form lwb to upb
+
+    directed: boolean
+        determines if the edges will be directed or not
+
+    regions: list of (region_start_node: int, region_end_node: int, region_connectivity: float) tuples
+        outlines the partitioning of the graph into regions along with their connectivity level
+        (percentage of the edges in a clique made up of the nodes in the region)
+
+    region_con: float
+        determines tha cross region connectivity
+
+    uniform_region_con: boolean
+        determines if the number of edges between each pair of regions are equal
+
+    weighted_nodes: boolean
+        determines if the nodes will be weighted or not
+
+    node_weight_ranges: list of (lwb: float, upb: float) tuples
+        the lwb and upb of node weights for each region
+    """
     
     # assert that the input parameters provide consistent information
     if not __assert_all_nodes_in_regions(num_of_nodes, regions):

@@ -4,6 +4,7 @@ from kmeans_init import get_random_centroids, kmeans_pp
 
 
 def __get_item_indices_per_cluster(k, labels):
+    'Get a 2-D array where the array at position i holds the indices of all items in cluster i'
 
     indices_per_cluster = [[] for x in range(k)]
     for i in range(len(labels)):
@@ -13,6 +14,7 @@ def __get_item_indices_per_cluster(k, labels):
 
 
 def __distance_to_centroid(item_index, centroid_index, item_indices_per_cluster, kernel_matrix):
+    'Compute the distance between a given item and centroid in the projected space'
 
     item_indices_in_cluster = item_indices_per_cluster[centroid_index]
     num_items_in_cluster = len(item_indices_in_cluster)
@@ -43,6 +45,7 @@ def __distance_to_centroid(item_index, centroid_index, item_indices_per_cluster,
 
 
 def __random_cluster_assignment(k, seed, items):
+    'Assign random cluster labels to each element'
 
     np.random.seed(seed)
     labels = [np.random.randint(0, k) for x in range(len(items))]
@@ -50,6 +53,7 @@ def __random_cluster_assignment(k, seed, items):
 
 
 def __proximity_cluster_assignment(k, seed, items, dist_func, init):
+    'Choose K centroid items and assign labels to all items based on their proximity to the centroids'
 
     if init == "proxy":
         centroid_indices = get_random_centroids(k, seed, items)
@@ -77,6 +81,7 @@ def __proximity_cluster_assignment(k, seed, items, dist_func, init):
 
 
 def get_kernel_matrix(items, dist_func, kernel):
+    'Compute the NxN matrix of kernel values for all pairs of items'
 
     kernel_matrix = np.zeros((len(items), len(items)))
 
@@ -97,6 +102,45 @@ def get_kernel_matrix(items, dist_func, kernel):
 
 
 def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random", kernel_matrix = None):
+    '''Run Kernel K-Means - returns
+
+    Parameters
+    ----------
+    k: int
+        the number of clusters
+
+    max_iters: int
+        the number of maximum allowed itterations before the method terminates
+        (termination will occure earlier if the cluster labels converge)
+
+    seed: int
+        a seed paramether for controlling randomness
+
+    items: 1-D list
+        the list of structured data items thet will be clustered
+
+    dist_func: function pointer
+        a function for computing the distance between any two items in the items list
+
+    kernel: function pointer
+        a kernel function
+
+    init: string
+        a string indicating the cluster label initialization method
+
+    kernel_matrix: 2-D numpy array
+        an optional pre-computed NxN kernal matrix
+
+    The possible initialization methods are: 'random', 'proxy' and 'kpp':
+        random - provide a random cluster label to each item
+        proxy  - randomly choose representative items and assign labels based on proximity to representatives
+        kpp    - similar to 'proxy' except the representatives are chosen using k-means++
+
+    Return
+    ------
+    labels: 1-D list of ints
+        a list of cluster assignment labels
+    '''
 
     num_iters = 0
     converged = False
@@ -149,6 +193,7 @@ def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random",
 
 
 def get_kernel_wcss(k, items, labels, dist_func, kernel, kernel_matrix = None):
+    'Compute the within-cluster sum of squares value for a given label assignment'
 
     wcss = 0
 
