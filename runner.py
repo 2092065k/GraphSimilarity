@@ -358,3 +358,7 @@ for graph in graphs:
 # 	generate_graphs_file_2("test" + str(p) + ".txt", 100, 50, seed = p,
 # 						regions = [[0, 10, perm[0]], [10, 20, perm[1]], [20, 30, perm[2]], [30, 40, perm[3]], [40, 50, perm[4]]],
 # 						region_con = 0.5, uniform_region_con = False, weighted_nodes = True, node_weight_ranges = nwr)
+
+#---------------------------------------------------------------------------------------------
+
+# matrices = get_rolx_matrices(graphs, rolx_path = "/home/aquila/CS/L5P/snap/examples/rolx/testrolx", num_roles = 3)

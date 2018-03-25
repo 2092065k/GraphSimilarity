@@ -1,6 +1,8 @@
 import os
 import sys
 import itertools
+import subprocess
+
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -243,3 +245,48 @@ def load_deep_walk_files(dir_name, lines_per_matrix):
         file.close()
 
     return matrices
+
+
+def get_rolx_matrices(graphs, rolx_path = "/path/to/rolx", num_roles = 3):
+    'Convert a collection of graphs into RolX matrices'
+
+    # the matrix has num_node lines + the extra node connected to everything
+    lines_per_matrix = graphs[0].get_num_vertices() + 1
+    
+    # create directoriries where the intermediate files will be stored
+    subprocess.call(["mkdir", "format_conversion"])
+    subprocess.call(["mkdir", "format_conversion/in"])
+    subprocess.call(["mkdir", "format_conversion/out"])
+
+    # create the edge list which will be provided to RolX
+    create_basic_edgelist_files(graphs, "format_conversion/in", common_node = True)
+
+    input_file_names = ["format_conversion/in/graph" + str(i) + ".txt" for i in range(len(graphs))]
+    output_file_names = ["format_conversion/out/graph" + str(i) + ".txt" for i in range(len(graphs))]
+
+    # conver each graph into a RolX matrix
+    for i in range(len(graphs)):
+
+        # this method assumes that RolX has been modified to putput the RxN matrix
+        rolx_cmd = [rolx_path, "-i:" + input_file_names[i], "-o:" + output_file_names[i], "-l:" + str(num_roles), "-u:" + str(num_roles)]
+        subprocess.call(rolx_cmd)
+
+    # concatenate all output matrix files into a single file
+    cat_cmd = ["cat"] + output_file_names
+    with open("format_conversion/out/graphs.txt", "w") as outfile:
+        subprocess.call(cat_cmd, stdout=outfile)
+
+    # read in the RolX matrices
+    matrices = load_matrix_data("format_conversion/out/graphs.txt", lines_per_matrix)
+
+    # discard the common node from each output matrix
+    matrices = [m[1:] for m in matrices]
+
+    # delete the intermediate files
+    subprocess.call(["rm", "-rf", "format_conversion"])
+
+    return matrices
+
+
+def get_deep_walk_matrices(graphs):
+    pass
