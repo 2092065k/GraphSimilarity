@@ -45,7 +45,7 @@ dw_matrices = load_deep_walk_files(dir_name = sys.argv[6], lines_per_matrix = sy
 
 
 # Method 2: using the wrapper functions: these functions are simpler to use but
-# provide less customizability
+# provide less flexibility
 
 # Calculate the RolX NxR matrix of each graph - assumes the RolX executable provides the
 # full NxR matrix. A temporary directory called format_conversion is also created and
