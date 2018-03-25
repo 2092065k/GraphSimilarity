@@ -154,7 +154,7 @@ def create_basic_edgelist_files(graphs, dir_name, common_node = False):
         file.close()
 
 
-def create_basic_adjacency_files(graphs, dir_name):
+def create_basic_adjacency_files(graphs, dir_name, ammend = False):
     'Creates files with basic adjacency list representations of the graphs'
 
     for index in range(len(graphs)):
@@ -170,6 +170,11 @@ def create_basic_adjacency_files(graphs, dir_name):
 
             file.write(str(vertex) + " ")
             row = adj_matrix[vertex]
+
+            # there is an issue in the provided DeepWalk implementation
+            # where node zero is sometimes discarded if it is disconnected
+            if ammend and vertex == 0 and sum(row) == 0:
+                file.write(str(1) + " ")
 
             for v in range(len(row)):
 
