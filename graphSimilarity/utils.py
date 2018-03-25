@@ -267,7 +267,7 @@ def get_rolx_matrices(graphs, rolx_path = "/path/to/rolx", num_roles = 3):
     # conver each graph into a RolX matrix
     for i in range(len(graphs)):
 
-        # this method assumes that RolX has been modified to putput the RxN matrix
+        # this method assumes that RolX has been modified to putput the NxR matrix
         rolx_cmd = [rolx_path, "-i:" + input_file_names[i], "-o:" + output_file_names[i], "-l:" + str(num_roles), "-u:" + str(num_roles)]
         subprocess.call(rolx_cmd)
 
