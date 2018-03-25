@@ -1,5 +1,3 @@
-import numpy as np
-
 from graphSimilarity.utils import *
 from graphSimilarity.kernel_methods import *
 from graphSimilarity.distance_functions import *
