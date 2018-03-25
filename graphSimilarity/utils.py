@@ -258,7 +258,7 @@ def get_rolx_matrices(graphs, rolx_path = "/path/to/rolx", num_roles = 3):
     subprocess.call(["mkdir", "format_conversion/in"])
     subprocess.call(["mkdir", "format_conversion/out"])
 
-    # create the edge list which will be provided to RolX
+    # create the edge lists which will be provided to RolX
     create_basic_edgelist_files(graphs, "format_conversion/in", common_node = True)
 
     input_file_names = ["format_conversion/in/graph" + str(i) + ".txt" for i in range(len(graphs))]
@@ -288,5 +288,36 @@ def get_rolx_matrices(graphs, rolx_path = "/path/to/rolx", num_roles = 3):
     return matrices
 
 
-def get_deep_walk_matrices(graphs):
-    pass
+def get_deep_walk_matrices(graphs, representation_size = 64, number_walks = 10, walk_length = 40, undirected = True):
+    'Convert a collection of graphs into DeepWalk matrices'
+
+    # the matrix has num_node lines
+    lines_per_matrix = graphs[0].get_num_vertices()
+
+    # create directoriries where the intermediate files will be stored
+    subprocess.call(["mkdir", "format_conversion"])
+    subprocess.call(["mkdir", "format_conversion/in"])
+    subprocess.call(["mkdir", "format_conversion/out"])
+
+    # create the adjacency lists which will be provided to DeepWalk
+    create_basic_adjacency_files(graphs, "format_conversion/in", ammend = True)
+
+    input_file_names = ["format_conversion/in/graph" + str(i) + ".txt" for i in range(len(graphs))]
+    output_file_names = ["format_conversion/out/graph" + str(i) + ".txt" for i in range(len(graphs))]
+
+    # conver each graph into a DeepWalk matrix
+    for i in range(len(graphs)):
+
+        # this method assumes that DeepWalk has been insatlled
+        dw_cmd = ["deepwalk", "--input", input_file_names[i], "--output", output_file_names[i], 
+                "--representation-size", str(representation_size), "--number-walks", str(number_walks),
+                "--walk-length", str(walk_length), "--undirected", str(undirected)]
+        subprocess.call(dw_cmd)
+
+    # read in the DeepWalk matrices
+    matrices = load_deep_walk_files("format_conversion/out", lines_per_matrix)
+
+    # delete the intermediate files
+    subprocess.call(["rm", "-rf", "format_conversion"])
+
+    return matrices

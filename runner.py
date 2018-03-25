@@ -362,3 +362,7 @@ for graph in graphs:
 #---------------------------------------------------------------------------------------------
 
 # matrices = get_rolx_matrices(graphs, rolx_path = "/home/aquila/CS/L5P/snap/examples/rolx/testrolx", num_roles = 3)
+
+#---------------------------------------------------------------------------------------------
+
+# matrices = get_deep_walk_matrices(graphs, representation_size = 64, number_walks = 10, walk_length = 40, undirected = True)
