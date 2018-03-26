@@ -119,9 +119,9 @@ def __generate_edges(num_of_nodes, weighted_edges, edge_weight_range, directed, 
                     edge.sort()
 
                 # currently excluding self edges
-	            if edge[0] != edge[1] and edge not in edges:
-	                edges.append(edge)
-	                approved = True
+                if edge[0] != edge[1] and edge not in edges:
+                    edges.append(edge)
+                    approved = True
 
     # generate edges between different regions
     if uniform_region_con:
