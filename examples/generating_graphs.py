@@ -4,7 +4,7 @@ from graphSimilarity.utils import *
 from graphSimilarity.graph_generator_2 import generate_graphs_file_2
 
 
-# The graph generator can easily be invoked once to generate graphs fom a single set of
+# The graph generator can easily be invoked once to generate graphs from a single set of
 # parameters. Here we show how to generate multiple sets of graphs, where each set has
 # common connectivity values for the respective graph regions.
 
