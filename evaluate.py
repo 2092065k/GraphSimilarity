@@ -28,6 +28,9 @@ for graph in graphs:
 # graphs = [g[1:] for g in load_matrix_data("/home/aquila/CS/L5P/FC/formatConversion8/outDir/data.txt", 21)]
 # graphs = load_deep_walk_files("/home/aquila/CS/L5P/FC/formatConversion4/outDir", 20)
 
+# graphs = get_rolx_matrices(graphs, rolx_path = "/home/aquila/CS/L5P/snap/examples/rolx/testrolx", num_roles = 3)
+# graphs = get_deep_walk_matrices(graphs, representation_size = 64, number_walks = 10, walk_length = 40, undirected = True)
+
 print "Input data loaded"
 
 
