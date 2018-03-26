@@ -14,11 +14,15 @@ def __assert_all_nodes_in_regions(num_of_nodes, regions):
     return nodes_in_region == all_nodes
 
 
-def __get_num_of_edge_in_region(num_of_nodes, percentage):
+def __get_num_of_edge_in_region(num_of_nodes, directed, percentage):
     'The number of edges will be equal to a percentage of the edges in a clique'
 
     edges_in_clique = (num_of_nodes * (num_of_nodes - 1)) / 2
     num_of_edges = int(round(edges_in_clique * percentage))
+
+    # if the edges are directed we can have twice as many
+    if directed:
+        num_of_edges = num_of_edges * 2
 
     return num_of_edges
 
@@ -103,7 +107,7 @@ def __generate_edges(num_of_nodes, weighted_edges, edge_weight_range, directed, 
     for region in regions:
 
         num_nodes_in_region = len(range(region[0], region[1]))
-        num_edges_in_region = __get_num_of_edge_in_region(num_nodes_in_region, region[2])
+        num_edges_in_region = __get_num_of_edge_in_region(num_nodes_in_region, directed, region[2])
 
         for e in range(num_edges_in_region):
 

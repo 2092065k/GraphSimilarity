@@ -1,12 +1,16 @@
 import numpy as np
 
 
-def __get_num_of_edges(num_of_nodes, clique_range):
+def __get_num_of_edges(num_of_nodes, directed, clique_range):
     'The number of edges will be equal to a percentage of the edges in a clique'
 
     edges_in_clique = (num_of_nodes * (num_of_nodes - 1)) / 2
     percentage = (np.random.randint(clique_range[0], clique_range[1]) + np.random.random()) / 100.0
     num_of_edges = int(round(edges_in_clique * percentage))
+
+    # if the edges are directed we can have twice as many
+    if directed:
+        num_of_edges = num_of_edges * 2
 
     return num_of_edges
 
@@ -26,7 +30,7 @@ def __generate_edge_weight(weighted, weight_range):
 def __generate_edges(num_of_nodes, clique_range, weighted, weight_range, directed, dense_regions, sparse_regions):
     'Generate all edges for a given graph'
 
-    num_of_edges =  __get_num_of_edges(num_of_nodes, clique_range)
+    num_of_edges =  __get_num_of_edges(num_of_nodes, directed, clique_range)
     edges = []
 
     for e in range(num_of_edges):
