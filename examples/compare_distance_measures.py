@@ -21,9 +21,6 @@ def compare_distance_measures(file, cluster_method, cluster_params, cluster_rest
 	    graph.compute_adjacency_matrix()
 	    graph.compute_diagonal_matrix()
 
-	distance_matrices = {}
-	kernel_matrices = {}
-
 	# only eavluate algorithms that do not consider node weights
 	if not node_weight_algs: 
 
@@ -79,22 +76,30 @@ def compare_distance_measures(file, cluster_method, cluster_params, cluster_rest
 		deg_nw_kernel_matrix = get_kernel_matrix(degree_matrices_nw, matrix_ed, rbf_kernel)
 
 
+def compute_silhouette(items, dist_func, cluster_method, cluster_params, cluster_restarts, distance_matrix = None, kernel_matrix = None)
+
+
 	if cluster_method == "sd_kmeans":
 
+		best_sd_wcss = float("inf")
+		bets_sd_centroids = []
 
-		centroids = sd_kmeans()
+		for run in range(cluster_restarts):
+
+			centroids = sd_kmeans(seed = run, items = items, dist_func = dist_func, distance_matrix = distance_matrix, **cluster_params)
+			sd_wcss = get_sd_wcss(centroids, items, dist_func, distance_matrix = distance_matrix)
+
+			if sd_wcss < best_sd_wcss:
+
+				best_sd_wcss = sd_wcss
+				bets_sd_centroids = centroids
+
+		labels = get_sd_labels(bets_sd_centroids, items, dist_func, distance_matrix = distance_matrix)
+		return silhouette_score(distance_matrix, labels, metric="precomputed")
 
 
 	elif cluster_method == "kernel_kmeans":
 
 
-
 	else:
-
-
-
-
-
-
-	for run in range(cluster_restarts):
 
