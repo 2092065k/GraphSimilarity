@@ -80,7 +80,7 @@ def __proximity_cluster_assignment(k, seed, items, dist_func, init):
     return labels
 
 
-def get_kernel_matrix(items, dist_func, kernel):
+def get_kernel_matrix(items, dist_func, kernel, **kernel_args):
     'Compute the NxN matrix of kernel values for all pairs of items'
 
     kernel_matrix = np.zeros((len(items), len(items)))
@@ -90,7 +90,7 @@ def get_kernel_matrix(items, dist_func, kernel):
 
         while j < len(items):
 
-            kernel_res = kernel(items[i], items[j], dist_func)
+            kernel_res = kernel(items[i], items[j], dist_func, **kernel_args)
             kernel_matrix[i, j] = kernel_res
             kernel_matrix[j, i] = kernel_res
 
@@ -101,7 +101,7 @@ def get_kernel_matrix(items, dist_func, kernel):
     return kernel_matrix
 
 
-def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random", kernel_matrix = None):
+def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random", kernel_matrix = None, **kernel_args):
     '''Run Kernel K-Means - returns
 
     Parameters
@@ -136,6 +136,9 @@ def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random",
         proxy  - randomly choose representative items and assign labels based on proximity to representatives
         kpp    - similar to 'proxy' except the representatives are chosen using k-means++
 
+    **kernel_args: optional kernel arguments
+        any further parameters are passed directly to the kernel function
+
     Return
     ------
     labels: 1-D list of ints
@@ -147,7 +150,7 @@ def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random",
 
     # compute the kernel matrix if one is not provided
     if kernel_matrix is None:
-        kernel_matrix = get_kernel_matrix(items, dist_func, kernel)
+        kernel_matrix = get_kernel_matrix(items, dist_func, kernel, **kernel_args)
 
     # initial assignment of cluster membership
     if init == "random":
@@ -192,13 +195,13 @@ def kernel_kmeans(k, max_iters, seed, items, dist_func, kernel, init = "random",
     return labels
 
 
-def get_kernel_wcss(k, items, labels, dist_func, kernel, kernel_matrix = None):
+def get_kernel_wcss(k, items, labels, dist_func, kernel, kernel_matrix = None, **kernel_args):
     'Compute the within-cluster sum of squares value for a given label assignment'
 
     wcss = 0
 
     if kernel_matrix is None:
-        kernel_matrix = get_kernel_matrix(items, dist_func, kernel)
+        kernel_matrix = get_kernel_matrix(items, dist_func, kernel, **kernel_args)
 
     item_indices_per_cluster = __get_item_indices_per_cluster(k, labels)
 

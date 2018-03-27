@@ -366,3 +366,8 @@ for graph in graphs:
 #---------------------------------------------------------------------------------------------
 
 # matrices = get_deep_walk_matrices(graphs, representation_size = 64, number_walks = 10, walk_length = 40, undirected = True)
+
+#---------------------------------------------------------------------------------------------
+
+# distance_matrix = get_distance_matrix(graphs, graph_edit_distance)
+# kernel_matrix = map_over_matrix_elements(distance_matrix, rbf, sigma = 0.1)

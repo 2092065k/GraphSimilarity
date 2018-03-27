@@ -57,6 +57,15 @@ def draw_all_graphs(file):
     draw_graph(num_nodes, edges)
 
 
+def map_over_matrix_elements(matrix, function, **kwds):
+    'Apply a function to every element of a matrix'
+
+    function_vec = np.vectorize(function)
+    mapped_matrix = function_vec(matrix, **kwds)
+
+    return mapped_matrix
+
+
 def draw_matrix_heat_map(matrix, color="hot"):
     'Draw a heat map of a matrix'
 
