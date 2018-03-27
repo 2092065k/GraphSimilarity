@@ -14,7 +14,7 @@ from sklearn.metrics import silhouette_score
 
 def compare_distance_measures(file, cluster_method, cluster_params, cluster_restarts, rolx_params = {}, deep_walk_params = {}, node_weight_algs = False):
     """This method compares all available graph distance measures according
-       to silhouette score, using a provide clustring algorithm
+       to silhouette score, using a provided clustring algorithm
     """
 
     # load graphs from the input data file
