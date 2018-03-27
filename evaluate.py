@@ -38,7 +38,8 @@ print "Input data loaded"
 distance_matrix = get_distance_matrix(graphs, graph_edit_distance)
 print "Distance matrix computed"
 
-kernel_matrix = get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
+# kernel_matrix = get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel, sigma = 0.1)
+kernel_matrix = map_over_matrix_elements(distance_matrix, rbf, sigma = 0.1)
 print "Kernel matrix computed"
 
 
@@ -79,7 +80,7 @@ print "Kernel matrix computed"
 
 #---------------------------------------------------------------------------------------------
 
-# labels = [x/100 for x in range(400)]
+# labels = [x/100 for x in range(500)]
 # print silhouette_score(distance_matrix, labels, metric="precomputed")
 
 #---------------------------------------------------------------------------------------------
