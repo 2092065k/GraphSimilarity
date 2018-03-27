@@ -15,6 +15,10 @@ from sklearn.metrics import silhouette_score
 def compare_distance_measures(file, cluster_method, cluster_params, cluster_restarts, rolx_params = {}, deep_walk_params = {}, node_weight_algs = False):
     """This method compares all available graph distance measures according
        to silhouette score, using a provided clustring algorithm
+
+       The rbf kernel is exclusively used for computing all kernel matrices.
+       Depending on the nature of the graphs it may be required to use a
+       different value of sigma or a different kernel altogether.
     """
 
     # load graphs from the input data file
@@ -32,28 +36,28 @@ def compare_distance_measures(file, cluster_method, cluster_params, cluster_rest
 
         print "Calculating Graph Edit Distance Sillhouette"
         ged_distance_matrix = get_distance_matrix(graphs, graph_edit_distance)
-        ged_kernel_matrix = get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
+        ged_kernel_matrix = map_over_matrix_elements(ged_distance_matrix, rbf, sigma = 0.1)
         silhouette_values["Graph Edit Distance"] = compute_silhouette(graphs, graph_edit_distance,
             cluster_method, cluster_params, cluster_restarts, distance_matrix = ged_distance_matrix, kernel_matrix = ged_kernel_matrix)
 
         print "Calculating DeltaCon Sillhouette"
         fabp_matrices = [fabp(graph) for graph in graphs]
         dc_distance_matrix = get_distance_matrix(fabp_matrices, root_ed)
-        dc_kernel_matrix = get_kernel_matrix(fabp_matrices, root_ed, rbf_kernel)
+        dc_kernel_matrix = map_over_matrix_elements(dc_distance_matrix, rbf, sigma = 0.1)
         silhouette_values["DeltaCon"] = compute_silhouette(fabp_matrices, root_ed,
             cluster_method, cluster_params, cluster_restarts, distance_matrix = dc_distance_matrix, kernel_matrix = dc_kernel_matrix)
 
         print "Calculating SimRank Sillhouette"
         sim_rank_matrices = [sim_rank(graph) for graph in graphs]
         sr_distance_matrix = get_distance_matrix(sim_rank_matrices, matrix_ed)
-        sr_kernel_matrix = get_kernel_matrix(sim_rank_matrices, matrix_ed, rbf_kernel)
+        sr_kernel_matrix = map_over_matrix_elements(sr_distance_matrix, rbf, sigma = 0.1)
         silhouette_values["SimRank"] = compute_silhouette(sim_rank_matrices, matrix_ed,
             cluster_method, cluster_params, cluster_restarts, distance_matrix = sr_distance_matrix, kernel_matrix = sr_kernel_matrix)
 
         print "Calculating In/Out Node Degree Sillhouette"
         degree_matrices = [node_degree_matrix(graph) for graph in graphs]
         deg_distance_matrix = get_distance_matrix(degree_matrices, matrix_ed)
-        deg_kernel_matrix = get_kernel_matrix(degree_matrices, matrix_ed, rbf_kernel)
+        deg_kernel_matrix = map_over_matrix_elements(deg_distance_matrix, rbf, sigma = 0.1)
         silhouette_values["Degree In/Out"] = compute_silhouette(degree_matrices, matrix_ed,
             cluster_method, cluster_params, cluster_restarts, distance_matrix = deg_distance_matrix, kernel_matrix = deg_kernel_matrix)
 
@@ -62,7 +66,7 @@ def compare_distance_measures(file, cluster_method, cluster_params, cluster_rest
             print "Calculating RolX Sillhouette"
             rolx_matrices = get_rolx_matrices(graphs, **rolx_params)
             rolx_distance_matrix = get_distance_matrix(rolx_matrices, matrix_cd)
-            rolx_kernel_matrix = get_kernel_matrix(rolx_matrices, matrix_cd, rbf_kernel)
+            rolx_kernel_matrix = map_over_matrix_elements(rolx_distance_matrix, rbf, sigma = 0.1)
             silhouette_values["RolX"] = compute_silhouette(rolx_matrices, matrix_cd,
                 cluster_method, cluster_params, cluster_restarts, distance_matrix = rolx_distance_matrix, kernel_matrix = rolx_kernel_matrix)
 
@@ -71,7 +75,7 @@ def compare_distance_measures(file, cluster_method, cluster_params, cluster_rest
             print "Calculating DeepWalk Sillhouette"
             dw_matrices = get_deep_walk_matrices(graphs, **deep_walk_params)
             dw_distance_matrix = get_distance_matrix(dw_matrices, matrix_cd)
-            dw_kernel_matrix = get_kernel_matrix(dw_matrices, matrix_cd, rbf_kernel)
+            dw_kernel_matrix = map_over_matrix_elements(dw_distance_matrix, rbf, sigma = 0.1)
             silhouette_values["DeepWalk"] = compute_silhouette(dw_matrices, matrix_cd,
                 cluster_method, cluster_params, cluster_restarts, distance_matrix = dw_distance_matrix, kernel_matrix = dw_kernel_matrix)
 
@@ -80,7 +84,7 @@ def compare_distance_measures(file, cluster_method, cluster_params, cluster_rest
 
         print "Calculating Graph Edit Distance with Node Weights Sillhouette"
         ged_nw_distance_matrix = get_distance_matrix(graphs, graph_edit_distance_nw)
-        ged_nw_kernel_matrix = get_kernel_matrix(graphs, graph_edit_distance_nw, rbf_kernel)
+        ged_nw_kernel_matrix = map_over_matrix_elements(ged_nw_distance_matrix, rbf, sigma = 0.1)
         silhouette_values["Graph Edit Distance With Node Weights"] = compute_silhouette(graphs, graph_edit_distance_nw,
             cluster_method, cluster_params, cluster_restarts, distance_matrix = ged_nw_distance_matrix, kernel_matrix = ged_nw_kernel_matrix)
 
@@ -88,14 +92,14 @@ def compare_distance_measures(file, cluster_method, cluster_params, cluster_rest
         norm = get_largest_node_weight(graphs)
         fabp_nw_matrices = [fabp_nw(graph, norm) for graph in graphs]
         dc_nw_distance_matrix = get_distance_matrix(fabp_nw_matrices, root_ed)
-        dc_nw_kernel_matrix = get_kernel_matrix(fabp_nw_matrices, root_ed, rbf_kernel)
+        dc_nw_kernel_matrix = map_over_matrix_elements(dc_nw_distance_matrix, rbf, sigma = 0.1)
         silhouette_values["DeltaCon With Node Weights"] = compute_silhouette(fabp_nw_matrices, root_ed,
             cluster_method, cluster_params, cluster_restarts, distance_matrix = dc_nw_distance_matrix, kernel_matrix = dc_nw_kernel_matrix)
 
         print "Calculating In/Out Node Degree with Node Weights Sillhouette"
         degree_matrices_nw = [node_degree_weight_matrix(graph) for graph in graphs]
         deg_nw_distance_matrix = get_distance_matrix(degree_matrices_nw, matrix_ed)
-        deg_nw_kernel_matrix = get_kernel_matrix(degree_matrices_nw, matrix_ed, rbf_kernel)
+        deg_nw_kernel_matrix = map_over_matrix_elements(deg_nw_distance_matrix, rbf, sigma = 0.1)
         silhouette_values["Degree In/Out With Node Weights"] = compute_silhouette(degree_matrices_nw, matrix_ed,
             cluster_method, cluster_params, cluster_restarts, distance_matrix = deg_nw_distance_matrix, kernel_matrix = deg_nw_kernel_matrix)
 

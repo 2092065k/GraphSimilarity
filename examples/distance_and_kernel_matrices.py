@@ -24,7 +24,7 @@ for graph in graphs:
 # any pre-processing stage
 
 ged_distance_matrix = get_distance_matrix(graphs, graph_edit_distance)
-ged_kernel_matrix = get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
+ged_kernel_matrix = get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel, sigma = 0.1)
 
 # All other algorithms include a pre-processing stage where the input graphs are converted
 # to another format (matrices) and the distances are then comuted over the new objects.
@@ -34,18 +34,25 @@ ged_kernel_matrix = get_kernel_matrix(graphs, graph_edit_distance, rbf_kernel)
 # Slow variant uning DeltaCon - involvels a lot of redundant computation
 
 slow_dc_distance_matrix = get_distance_matrix(graphs, delta_con)
-slow_dc_kernel_matrix = get_kernel_matrix(graphs, delta_con, rbf_kernel)
+slow_dc_kernel_matrix = get_kernel_matrix(graphs, delta_con, rbf_kernel, sigma = 0.1)
 
 # Fast variant uning DeltaCon - include an explicit pre-processing stage
 
 affinity_matrices = [fabp(graph) for graph in graphs]
 fast_dc_distance_matrix = get_distance_matrix(affinity_matrices, root_ed)
-fast_dc_kernel_matrix = get_kernel_matrix(affinity_matrices, root_ed, rbf_kernel)
+fast_dc_kernel_matrix = get_kernel_matrix(affinity_matrices, root_ed, rbf_kernel, sigma = 0.1)
 
 # The fast and slow variants now hold identical data
 
 # Witout passing the pre-computing matrix to the clustering algorithm, it will
 # re-compute it for each invocation.
+
+
+# Note that if the NxN distance matrix is already available, the NxN kernel matrix
+# can more efficiently be computed by mapping over the values of the distance matrix
+# (simply invoking get_kernel_matrix() with a collection of items involves also comuting
+# the distances between every two items)
+ged_kernel_matrix = map_over_matrix_elements(ged_distance_matrix, rbf, sigma = 0.1)
 
 
 # Examples for passing a pre-computed distance/kernel matrix for clustering:

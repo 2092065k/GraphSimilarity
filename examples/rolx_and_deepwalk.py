@@ -21,7 +21,7 @@ for graph in graphs:
 # representation for every graph will be created.
 
 # The common node parameter is necessary for the correct execution of the RolX
-# implementatio: it creates a common node which is connected to every other node.
+# implementation: it creates a common node which is connected to every other node.
 # If it is necessary to obtain edge list files as normal - set the parameter to false
 create_basic_edgelist_files(graphs, dir_name = sys.argv[2], common_node = True)
 
@@ -35,7 +35,10 @@ rx_matrices = load_matrix_data(file = sys.argv[3], lines_per_matrix = sys.argv[4
 
 # For DeepWalk is is necessary to supply a directory where a file with an
 # adjacency list representation for each grah will be created.
-create_basic_adjacency_files(graphs, dir_name = sys.argv[5])
+# The optional ammend paramether is included to overcome a bug in the implementation
+# of DeepWalk where node zero is discarded if it is disconnected - an additional
+# edge is created between node zero and node one.
+create_basic_adjacency_files(graphs, dir_name = sys.argv[5], ammend = True)
 
 # Onec the files are created, another script needs to be launched to run the
 # DeepWalk implementation on every output file, which will create DeepWalk format
