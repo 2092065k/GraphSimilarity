@@ -97,13 +97,9 @@ def degree_dist(g1, g2):
 
 def matrix_ed(m1, m2):
 
-	dist = 0
+    dist = sum(np.sqrt(sum((m1 - m2) ** 2)))
 
-	for i in range(m1.shape[0]):
-
-		dist += np.linalg.norm(m1[i] - m2[i])
-
-	return dist
+    return dist
 
 def flat_matrix_ed(m1, m2):
 
