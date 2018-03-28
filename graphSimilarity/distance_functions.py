@@ -82,7 +82,7 @@ def node_degree_matrix(g):
     out_deg = adj.sum(axis=0)
     s = np.vstack((in_deg, out_deg))
 
-    return s
+    return s.T
 
 def degree_dist(g1, g2):
 
@@ -183,7 +183,7 @@ def node_degree_weight_matrix(g):
     out_deg = adj.sum(axis=0)
     s = np.vstack((in_deg, out_deg, nw))
 
-    return s
+    return s.T
 
 def degree_dist_nw(g1, g2):
 
