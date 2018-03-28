@@ -134,16 +134,6 @@ def flat_matrix_cd(m1, m2):
 
 def matrix_md(m1, m2):
 
-    dist = 0
-
-    for i in range(m1.shape[0]):
-
-        dist += sp.spatial.distance.cityblock(m1[i], m2[i])
-
-    return dist
-
-def flat_matrix_md(m1, m2):
-
     dist = sp.spatial.distance.cityblock(m1.flatten(), m2.flatten())
 
     return dist
