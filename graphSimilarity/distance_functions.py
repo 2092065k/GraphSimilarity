@@ -97,7 +97,7 @@ def degree_dist(g1, g2):
 
 def matrix_ed(m1, m2):
 
-    dist = sum(np.sqrt(sum((m1 - m2) ** 2)))
+    dist = np.sum(np.sqrt(np.sum((m1 - m2) ** 2, axis = 1)))
 
     return dist
 
