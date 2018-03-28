@@ -216,7 +216,7 @@ def load_matrix_data(file, lines_per_matrix):
 
         if num_lines == lines_per_matrix:
 
-            matrices.append(np.matrix(matrix))
+            matrices.append(np.array(matrix))
             num_lines = 0
             matrix = []
 
@@ -247,7 +247,7 @@ def load_deep_walk_files(dir_name, lines_per_matrix):
         for i in range(lines_per_matrix):
             matrix.append(adj_dict[i])
 
-        matrices.append(np.matrix(matrix))
+        matrices.append(np.array(matrix))
         adj_dict = {}
         matrix = []
 
