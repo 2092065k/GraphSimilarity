@@ -105,6 +105,13 @@ def matrix_ed(m1, m2):
 
 	return dist
 
+def flat_matrix_ed(m1, m2):
+
+    dist = np.linalg.norm(m1 - m2)
+
+    return dist
+
+
 # --- Matrix Cosine Distance ---
 
 def matrix_cd(m1, m2):
@@ -117,6 +124,12 @@ def matrix_cd(m1, m2):
 
     return dist
 
+def flat_matrix_cd(m1, m2):
+
+    dist = sp.spatial.distance.cosine(m1.flatten(), m2.flatten())
+
+    return dist
+
 # -- Matrix Manhattan Distance --
 
 def matrix_md(m1, m2):
@@ -126,6 +139,12 @@ def matrix_md(m1, m2):
     for i in range(m1.shape[0]):
 
         dist += sp.spatial.distance.cityblock(m1[i], m2[i])
+
+    return dist
+
+def flat_matrix_md(m1, m2):
+
+    dist = sp.spatial.distance.cityblock(m1.flatten(), m2.flatten())
 
     return dist
 
