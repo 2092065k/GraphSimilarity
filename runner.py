@@ -1,5 +1,6 @@
 import sys
 import time
+import operator
 import numpy as np
 
 from graphSimilarity.utils import *
@@ -371,3 +372,96 @@ for graph in graphs:
 
 # distance_matrix = get_distance_matrix(graphs, graph_edit_distance)
 # kernel_matrix = map_over_matrix_elements(distance_matrix, rbf, sigma = 0.1)
+
+#---------------------------------------------------------------------------------------------
+
+# times = {}
+# distance_matrix = None
+
+
+# start = time.time()
+# distance_matrix = get_distance_matrix(graphs, graph_edit_distance)
+# end = time.time()
+
+# times["GED"] = end - start
+# distance_matrix = None
+
+
+# start = time.time()
+# fabp_matrices = [fabp(graph) for graph in graphs]
+# distance_matrix = get_distance_matrix(fabp_matrices, root_ed)
+# end = time.time()
+
+# times["DC"] = end - start
+# distance_matrix = None
+
+
+# start = time.time()
+# sim_rank_matrices = [sim_rank(graph) for graph in graphs]
+# distance_matrix = get_distance_matrix(sim_rank_matrices, flat_matrix_cd)
+# end = time.time()
+
+# times["SR"] = end - start
+# distance_matrix = None
+
+
+# start = time.time()
+# degree_matrices = [node_degree_matrix(graph) for graph in graphs]
+# distance_matrix = get_distance_matrix(degree_matrices, flat_matrix_ed)
+# end = time.time()
+
+# times["DEG"] = end - start
+# distance_matrix = None
+
+
+# start = time.time()
+# rolx_matrices = get_rolx_matrices(graphs, rolx_path = "/home/aquila/CS/L5P/snap/examples/rolx/testrolx", num_roles = 3)
+# distance_matrix = get_distance_matrix(rolx_matrices, flat_matrix_cd)
+# end = time.time()
+
+# times["RolX"] = end - start
+# distance_matrix = None
+
+
+# start = time.time()
+# dw_matrices = get_deep_walk_matrices(graphs, representation_size = 64, number_walks = 10, walk_length = 40, undirected = True)
+# distance_matrix = get_distance_matrix(dw_matrices, flat_matrix_cd)
+# end = time.time()
+
+# times["DW"] = end - start
+# distance_matrix = None
+
+
+
+# start = time.time()
+# distance_matrix = get_distance_matrix(graphs, graph_edit_distance_nw)
+# end = time.time()
+
+# times["GED_NW"] = end - start
+# distance_matrix = None
+
+
+# start = time.time()
+# norm = get_largest_node_weight(graphs)
+# fabp_nw_matrices = [fabp_nw(graph, norm) for graph in graphs]
+# distance_matrix = get_distance_matrix(fabp_nw_matrices, root_ed)
+# end = time.time()
+
+# times["DC_NW"] = end - start
+# distance_matrix = None
+
+
+# start = time.time()
+# degree_matrices_nw = [node_degree_weight_matrix(graph) for graph in graphs]
+# distance_matrix = get_distance_matrix(degree_matrices_nw, flat_matrix_ed)
+# end = time.time()
+
+# times["DEG_NW"] = end - start
+# distance_matrix = None
+
+
+# sorted_times = sorted(times.items(), key=operator.itemgetter(1))
+# print "__________________________________________________________"
+
+# for item in sorted_times:
+# 	print item
