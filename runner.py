@@ -1,6 +1,7 @@
 import sys
 import time
 import operator
+import subprocess
 import numpy as np
 
 from graphSimilarity.utils import *
@@ -465,3 +466,38 @@ for graph in graphs:
 
 # for item in sorted_times:
 # 	print str(item[0]) + " " + str(item[1])
+
+#---------------------------------------------------------------------------------------------
+
+# np.random.seed(40)
+# graphs_per_run = 100
+# num_runs = 5
+# num_nodes = 100
+# num_regions = 5
+
+# nodes_per_region = num_nodes / num_regions
+# regions = [[i * nodes_per_region, (i+1) * nodes_per_region] for i in range(num_regions)]
+
+# conn_possib = [0.8, 0.4, 0.2]
+
+# conns = [conn_possib[np.random.randint(0,len(conn_possib))] for i in range(num_regions)]
+# permu = get_random_permutations(conns, num_runs, seed = 40)
+
+# file_names = ["part" + str(i) + ".txt" for i in range(num_runs)]
+
+
+# for run in range(num_runs):
+
+# 	conn = permu[run]
+# 	regions_with_conn = [regions[i] + [conn[i]] for i in range(num_regions)]
+# 	generate_graphs_file_2(file_names[run], graphs_per_run, num_nodes, seed = run,
+# 						regions = regions_with_conn, region_con = 0.5, uniform_region_con = False)
+
+
+# cat_cmd = ["cat"] + file_names
+
+# with open('graphs.txt', "w") as outfile:
+# 	subprocess.call(cat_cmd, stdout=outfile)
+
+# rm_cmd = ["rm"] + file_names
+# subprocess.call(rm_cmd)
