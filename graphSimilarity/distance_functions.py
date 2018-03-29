@@ -112,11 +112,13 @@ def flat_matrix_ed(m1, m2):
 
 def matrix_cd(m1, m2):
 
-    dist = 0
+    norm1 = np.sqrt(np.sum(m1 ** 2, axis = 1))
+    norm2 = np.sqrt(np.sum(m2 ** 2, axis = 1))
+    norm = norm1 * norm2
 
-    for i in range(m1.shape[0]):
+    dot = np.sum(m1 * m2, axis = 1)
 
-        dist += sp.spatial.distance.cosine(m1[i], m2[i])
+    dist = np.sum(np.ones(dot.shape) - dot / norm)
 
     return dist
 
