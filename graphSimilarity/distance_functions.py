@@ -14,13 +14,13 @@ def graph_edit_distance(g1, g2):
 
     diff = m1 - m2
 
-    return sum(sum(abs(diff)))
+    return np.sum(np.sum(np.abs(diff)))
 
 # --- DeltaCon ---
 
 def root_ed(s1, s2):
 
-    root_ed = np.sqrt(sum(sum((np.sqrt(s1) - np.sqrt(s2)) ** 2)))
+    root_ed = np.sqrt(np.sum(np.sum((np.sqrt(s1) - np.sqrt(s2)) ** 2)))
 
     return root_ed
 
@@ -148,8 +148,8 @@ def graph_edit_distance_nw(g1, g2):
     nw1 = g1.get_vertex_weights()
     nw2 = g2.get_vertex_weights()
 
-    ged_diff = sum(sum(abs(m1 - m2)))
-    nw_diff = sum(abs(nw1 - nw2))
+    ged_diff = np.sum(np.sum(np.abs(m1 - m2)))
+    nw_diff = np.sum(np.abs(nw1 - nw2))
 
     return ged_diff + nw_diff
 
