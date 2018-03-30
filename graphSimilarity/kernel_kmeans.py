@@ -1,4 +1,5 @@
 import numpy as np
+
 from copy import deepcopy
 from kmeans_init import get_random_centroids, kmeans_pp
 

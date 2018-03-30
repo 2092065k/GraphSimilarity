@@ -1,4 +1,6 @@
+import random
 import itertools
+
 import numpy as np
 
 
@@ -39,7 +41,7 @@ def __generate_edge_weight(weighted_edges, edge_weight_range):
     return weight
 
 
-def __generate_edge_between_regions(edges, directed, region_0, region_1):
+def __generate_edge_between_regions(cross_region_edges, directed, region_0, region_1):
     'Create a single edge between the two regions'
 
     approved = False
@@ -59,8 +61,8 @@ def __generate_edge_between_regions(edges, directed, region_0, region_1):
             else:
                 edge = [node2, node1]
 
-        if edge not in edges:
-            edges.append(edge)
+        if edge not in cross_region_edges:
+            cross_region_edges.append(edge)
             approved = True
 
 
@@ -71,6 +73,8 @@ def __generate_uniform_cross_region_edges(edges, directed, region_con, regions):
 
     for region_pair in region_pairs:
 
+        cross_region_edges = []
+
         region_0 = region_pair[0]
         region_1 = region_pair[1]
 
@@ -78,7 +82,9 @@ def __generate_uniform_cross_region_edges(edges, directed, region_con, regions):
         num_edges_between_regions = int(round(smaller_group_size * region_con))
 
         for e in range(num_edges_between_regions):
-            __generate_edge_between_regions(edges, directed, region_0, region_1)
+            __generate_edge_between_regions(cross_region_edges, directed, region_0, region_1)
+
+        edges += cross_region_edges
 
 
 
@@ -89,11 +95,17 @@ def __generate_cross_region_edges(edges, directed, num_of_nodes, region_con, reg
     region_pairs = list(itertools.combinations(regions, 2))
     avg_region_size = num_of_nodes / float(len(regions))
     num_edges_between_regions = int(round(region_con * avg_region_size * len(region_pairs)))
+    all_cross_region_edges = [[] for pair_id in range(len(region_pairs))]
 
     for e in range(num_edges_between_regions):
 
-        region_pair = region_pairs[np.random.randint(0, len(region_pairs))]
-        __generate_edge_between_regions(edges, directed, region_pair[0], region_pair[1])
+        pair_id = np.random.randint(0, len(region_pairs))
+        region_pair = region_pairs[pair_id]
+        cross_region_edges = all_cross_region_edges[pair_id]
+        __generate_edge_between_regions(cross_region_edges, directed, region_pair[0], region_pair[1])
+
+    for cross_region_edges in all_cross_region_edges:
+        edges += cross_region_edges
 
 
 
@@ -106,26 +118,19 @@ def __generate_edges(num_of_nodes, weighted_edges, edge_weight_range, directed, 
     # generate edges within each region
     for region in regions:
 
-        num_nodes_in_region = len(range(region[0], region[1]))
+        num_nodes_in_region = region[1] - region[0]
         num_edges_in_region = __get_num_of_edge_in_region(num_nodes_in_region, directed, region[2])
 
-        for e in range(num_edges_in_region):
+        possible_edges = []
 
-            approved = False
+        if not directed:
+            possible_edges = list((list(tup) for tup in itertools.combinations(range(region[0], region[1]), 2)))
 
-            while not approved:
+        else:
+            possible_edges = list((list(tup) for tup in itertools.permutations(range(region[0], region[1]), 2)))
 
-                node1 = np.random.randint(region[0], region[1])
-                node2 = np.random.randint(region[0], region[1])
-                edge = [node1, node2]
-
-                if not directed:
-                    edge.sort()
-
-                # currently excluding self edges
-                if edge[0] != edge[1] and edge not in edges:
-                    edges.append(edge)
-                    approved = True
+        region_edges = random.sample(possible_edges, num_edges_in_region)
+        edges += region_edges
 
     # generate edges between different regions
     if uniform_region_con:
@@ -217,6 +222,7 @@ def generate_graphs_file_2(file_name, num_of_graphs, num_of_nodes, seed = 0,
         return
 
     np.random.seed(seed)
+    random.seed(seed)
     file = open(file_name, 'w')
 
     # for each graph write out - number of nodes, node weights, edges

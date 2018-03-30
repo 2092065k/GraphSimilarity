@@ -1,4 +1,5 @@
 import numpy as np
+
 from kmeans_init import get_random_centroids, kmeans_pp
 
 

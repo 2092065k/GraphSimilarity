@@ -1,5 +1,6 @@
 import numpy as np
 import scipy as sp
+
 from graph import Graph
 
 # All algorithms assume that the relevant graph matrices are already computed 
