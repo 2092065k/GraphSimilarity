@@ -376,6 +376,8 @@ for graph in graphs:
 
 #---------------------------------------------------------------------------------------------
 
+# print "Input data loaded"
+
 # times = {}
 # distance_matrix = None
 
