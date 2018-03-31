@@ -503,3 +503,67 @@ for graph in graphs:
 
 # rm_cmd = ["rm"] + file_names
 # subprocess.call(rm_cmd)
+
+#---------------------------------------------------------------------------------------------
+
+# degree_matrices = [node_degree_matrix(graph) for graph in graphs]
+# distance_matrix = get_distance_matrix(degree_matrices, flat_matrix_ed)
+# kernel_matrix = map_over_matrix_elements(distance_matrix, rbf, sigma = 0.01)
+
+# print "Input data loaded"
+
+# times = {}
+
+# start = time.time()
+# labels = kernel_kmeans(5, 100, 0, degree_matrices, flat_matrix_ed, rbf_kernel, kernel_matrix = kernel_matrix)
+# end = time.time()
+
+# times["Kernel_KMeans"] = end - start
+
+
+# start = time.time()
+# centroids = sd_kmeans(5, 100, 0, degree_matrices, flat_matrix_ed, distance_matrix = distance_matrix)
+# end = time.time()
+
+# times["SD_KMeans"] = end - start
+
+
+# start = time.time()
+# labels = SpectralClustering(n_clusters=5, random_state=0, n_init=1, affinity='precomputed').fit(kernel_matrix).labels_
+# end = time.time()
+
+# times["Spectral_Clustering"] = end - start
+
+# sorted_times = sorted(times.items(), key=operator.itemgetter(1))
+# print "__________________________________________________________"
+
+# for item in sorted_times:
+# 	print str(item[0]) + " " + str(item[1])
+
+#---------------------------------------------------------------------------------------------
+
+# degree_matrices = [node_degree_matrix(graph) for graph in graphs]
+# distance_matrix = get_distance_matrix(degree_matrices, flat_matrix_ed)
+# kernel_matrix = map_over_matrix_elements(distance_matrix, rbf, sigma = 0.01)
+
+# print "Input data loaded"
+
+# times = {}
+
+# start = time.time()
+# labels = kernel_kmeans(5, 1, 0, degree_matrices, flat_matrix_ed, rbf_kernel, kernel_matrix = kernel_matrix)
+# end = time.time()
+
+# times["Kernel_KMeans_1"] = end - start
+
+# start = time.time()
+# centroids = sd_kmeans(5, 1, 0, degree_matrices, flat_matrix_ed, distance_matrix = distance_matrix)
+# end = time.time()
+
+# times["SD_KMeans_1"] = end - start
+
+# sorted_times = sorted(times.items(), key=operator.itemgetter(1))
+# print "__________________________________________________________"
+
+# for item in sorted_times:
+# 	print str(item[0]) + " " + str(item[1])
