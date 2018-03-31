@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
 setup(name='graphSimilarity',
-      version='0.1.0',
+      version='0.1.1',
       description='Graph Distance Measures and Clustering',
       author='Ivan Kyosev',
       author_email='2092065k@student.gla.ac.uk',
-      license='GPL',
+      license='GPLv3',
       install_requires=['numpy',
                         'matplotlib',
                         'networkx',
