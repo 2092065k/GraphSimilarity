@@ -1,9 +1,9 @@
-## Graph Similarity and Clustering
+# Graph Similarity and Clustering
 
 Research into algorithms for measuring graph distance/similarity and clustering of structured data
 
 
-# The package can be installed by running:
+## The package can be installed by running:
 
 python setup.py install
 
@@ -12,7 +12,7 @@ or through pip:
 pip install graphSimilarity
 
 
-# The expected input data format is as folows:
+## The expected input data format is as folows:
 
 - a single integer on a line denotes the start of a new graph and signifies
 how many nodes are in the graph
