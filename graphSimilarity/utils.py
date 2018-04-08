@@ -297,7 +297,8 @@ def get_rolx_matrices(graphs, rolx_path = "/path/to/rolx", num_roles = 3):
     return matrices
 
 
-def get_deep_walk_matrices(graphs, representation_size = 64, number_walks = 10, walk_length = 40, undirected = True):
+def get_deep_walk_matrices(graphs, representation_size = 64, number_walks = 10, walk_length = 40, undirected = True,
+                            window_size = 5, seed = 0, workers = 1):
     'Convert a collection of graphs into DeepWalk matrices'
 
     # the matrix has num_node lines
@@ -320,7 +321,8 @@ def get_deep_walk_matrices(graphs, representation_size = 64, number_walks = 10, 
         # this method assumes that DeepWalk has been insatlled
         dw_cmd = ["deepwalk", "--input", input_file_names[i], "--output", output_file_names[i], 
                 "--representation-size", str(representation_size), "--number-walks", str(number_walks),
-                "--walk-length", str(walk_length), "--undirected", str(undirected)]
+                "--walk-length", str(walk_length), "--undirected", str(undirected), "--seed", str(seed),
+                "--window-size", str(window_size), "--workers", str(workers)]
         subprocess.call(dw_cmd)
 
     # read in the DeepWalk matrices
