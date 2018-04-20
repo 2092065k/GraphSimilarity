@@ -161,17 +161,17 @@ def compute_silhouette(items, dist_func, cluster_method, cluster_params, cluster
 
 # example invokation using structured data k-means
 silhouette_values = compare_distance_measures(sys.argv[1], "sd_kmeans", {"k": 2, "max_iters": 50, "init": "random"}, 5,
-                    rolx_params = {"rolx_path": "/home/aquila/CS/L5P/snap/examples/rolx/testrolx", "num_roles": 3}, 
+                    rolx_params = {"rolx_path": "/path/to/rolx", "num_roles": 3}, 
                     deep_walk_params = {"representation_size" : 64, "number_walks": 10, "walk_length": 40, "undirected": True})
 
 # example invokation using kernel k-means
 # silhouette_values = compare_distance_measures(sys.argv[1], "kernel_kmeans", {"k": 2, "max_iters": 50, "init": "random", "kernel": rbf_kernel}, 5,
-#                     rolx_params = {"rolx_path": "/home/aquila/CS/L5P/snap/examples/rolx/testrolx", "num_roles": 3}, 
+#                     rolx_params = {"rolx_path": "/path/to/rolx", "num_roles": 3}, 
 #                     deep_walk_params = {"representation_size" : 64, "number_walks": 10, "walk_length": 40, "undirected": True})
 
 # example invokation using spectral clustering
 # silhouette_values = compare_distance_measures(sys.argv[1], "spectral", {"n_clusters": 2}, 5,
-#                     rolx_params = {"rolx_path": "/home/aquila/CS/L5P/snap/examples/rolx/testrolx", "num_roles": 3}, 
+#                     rolx_params = {"rolx_path": "/path/to/rolx", "num_roles": 3}, 
 #                     deep_walk_params = {"representation_size" : 64, "number_walks": 10, "walk_length": 40, "undirected": True})
 
 
