@@ -12,11 +12,11 @@ or through pip:
 pip install graphSimilarity
 
 
-## The expected input data format is as folows:
+## The expected format for an input file of graphs is as follows:
 
 - a single integer on a line denotes the start of a new graph and signifies
 how many nodes are in the graph
 
 - an integer and a float on a line denote the ID of a node and its weight
 
-- three integers on line denote an edge with its source node, destination node and weight
+- three integers on a line denote an edge with its source node, destination node and weight
