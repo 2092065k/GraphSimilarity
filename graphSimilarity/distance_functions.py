@@ -196,3 +196,34 @@ def degree_dist_nw(g1, g2):
     dist = matrix_ed(s1, s2)
 
     return dist
+
+# --- SimRank Distance With Node Weights ---
+
+
+def sim_rank_nw(g, c = 0.8, max_iters = 10):
+
+    adj = g.get_adjacency_matrix()
+    nw = g.get_vertex_weights()
+
+    col_degree = adj.sum(axis = 0)
+    col_degree = [x if x != 0 else 1 for x in col_degree]
+    col_norm_adj = adj / col_degree
+
+    s = np.zeros(adj.shape)
+    np.fill_diagonal(s, nw)
+    
+    for i in range(max_iters):
+
+        s = c * np.dot(np.dot(col_norm_adj.T, s), col_norm_adj)
+        np.fill_diagonal(s, nw)
+
+    return s
+
+def sim_rank_distance_nw(g1, g2, c = 0.8, max_iters = 10):
+
+    s1 = sim_rank_nw(g1, c, max_iters)
+    s2 = sim_rank_nw(g2, c, max_iters)
+
+    dist = matrix_ed(s1, s2)
+
+    return dist
